@@ -115,6 +115,18 @@ class OutletNotifier extends StateNotifier<List<Outlet>> {
     _outlets = state;
     return list;
   }
+
+  Future<int> getOutletsTodayNumber(String date) async {
+    List<CompetitionReview> list = [];
+    for (var key in outletBox.keys) {
+      var dataAsMap = await outletBox.getAt(key);
+      var dataAsCompetitionReview = CompetitionReview.fromMap(dataAsMap);
+      list.add(dataAsCompetitionReview);
+    }
+
+    final todayOutlet = list.where((element) => element.date == date);
+    return todayOutlet.length;
+  }
 }
 
 class ReviewNotifier extends StateNotifier<List<CompetitionReview>> {

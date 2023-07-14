@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:netapp/app/presentation/widgets/edit_bottom_sheet_widget.dart';
+import 'package:netapp/app/presentation/widgets/new/edit_bottom_sheet_widget.dart';
 import 'package:netapp/app/presentation/widgets/input_field_widget.dart';
 import 'package:netapp/app/presentation/widgets/title_text.dart';
 import 'package:netapp/app/providers/state_providers.dart';

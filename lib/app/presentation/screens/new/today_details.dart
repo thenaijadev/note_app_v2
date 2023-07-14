@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:netapp/app/data/providers/outlet_provider.dart';
 import 'package:netapp/app/presentation/widgets/title_text.dart';
 import 'package:netapp/utilities/constants.dart/app_colors.dart';
 import 'package:netapp/utilities/router/routes.dart';
@@ -12,12 +13,24 @@ class TodayDetails extends StatefulWidget {
 }
 
 class _TodayDetailsState extends State<TodayDetails> {
+  String date = DateFormat.yMMMMd().format(DateTime.now());
+
+  int? outletCount;
+
+  @override
+  void initState() {
+    getNumber();
+    setState(() {});
+    super.initState();
+  }
+
+  getNumber() async {
+    outletCount = await OutletNotifier().getOutletsTodayNumber(date);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    var now = DateTime.now();
-
-    String date = DateFormat.yMMMMd().format(now);
-
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 100.0),
@@ -76,15 +89,11 @@ class _TodayDetailsState extends State<TodayDetails> {
                       value: date,
                     ),
                     const HorizontalDivider(width: 500),
-                    const DataRowWidget(
+                    DataRowWidget(
                       label: "Outlets captured today:",
-                      value: "0",
+                      value: outletCount.toString(),
                     ),
                     const HorizontalDivider(width: 500),
-                    const DataRowWidget(
-                      label: "Total for June:",
-                      value: "0",
-                    ),
                     const HorizontalDivider(width: 500),
                     const SizedBox(
                       height: 90,
