@@ -6,6 +6,7 @@ import 'package:netapp/app/presentation/screens/new/today_details.dart';
 import 'package:netapp/app/presentation/widgets/new/header_underline.dart';
 import 'package:netapp/app/presentation/widgets/title_text.dart';
 import 'package:netapp/utilities/constants.dart/app_colors.dart';
+import 'package:netapp/utilities/router/routes.dart';
 
 class ProductsTable extends StatefulWidget {
   const ProductsTable({
@@ -58,7 +59,7 @@ class _ProductsTableState extends State<ProductsTable> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color.fromARGB(255, 0, 44, 139),
         onPressed: () {
-          // Navigator.pushReplacementNamed(context, Routes.dataCapture);
+          Navigator.pushReplacementNamed(context, Routes.skuForm);
         },
         child: const Icon(
           Icons.add,

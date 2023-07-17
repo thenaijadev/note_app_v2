@@ -64,6 +64,7 @@ class OutletNotifier extends StateNotifier<List<Outlet>> {
     state = theOutLets;
     _outlets = state;
     // state = theOutLets;
+
     // _outlets = state;
   }
 
@@ -108,6 +109,7 @@ class OutletNotifier extends StateNotifier<List<Outlet>> {
     logger.e(newOutlets);
     state = newOutlets;
     _outlets = state;
+    print(state);
   }
 
   Future<List<Outlet>> getOutlets() async {

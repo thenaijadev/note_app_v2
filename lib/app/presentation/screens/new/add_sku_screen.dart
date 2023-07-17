@@ -3,20 +3,20 @@ import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:netapp/app/presentation/screens/new/today_details.dart';
 import 'package:netapp/app/presentation/widgets/new/header_underline.dart';
-import 'package:netapp/app/presentation/widgets/new/outlet_details_form.dart';
+import 'package:netapp/app/presentation/widgets/new/trade_visit_form.dart';
 import 'package:netapp/app/presentation/widgets/title_text.dart';
 import 'package:netapp/utilities/constants.dart/app_colors.dart';
 import 'package:netapp/utilities/geolocator.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 
-class DataCatureScreen extends StatefulWidget {
-  const DataCatureScreen({super.key});
+class SkuScreen extends StatefulWidget {
+  const SkuScreen({super.key});
 
   @override
-  State<DataCatureScreen> createState() => _DataCatureScreenState();
+  State<SkuScreen> createState() => _SkuScreenState();
 }
 
-class _DataCatureScreenState extends State<DataCatureScreen>
+class _SkuScreenState extends State<SkuScreen>
     with SingleTickerProviderStateMixin {
   final StopWatchTimer _stopWatchTimer = StopWatchTimer();
   Position? position;
@@ -125,7 +125,7 @@ class _DataCatureScreenState extends State<DataCatureScreen>
                               indicatorWeight: 2,
                               tabs: const [
                                 TextWidget(
-                                  text: "Outlet details",
+                                  text: "Sku Details",
                                   fontSize: 14,
                                 ),
                                 // TextWidget(
@@ -142,17 +142,17 @@ class _DataCatureScreenState extends State<DataCatureScreen>
                             child: TabBarView(
                               physics: const NeverScrollableScrollPhysics(),
                               controller: controller,
-                              children: [
-                                OutletDetailsForm(
-                                  controller: controller,
-                                  data: {
-                                    "capturedBy:": "Okwor",
-                                    "date": date,
-                                    "latitude": position?.latitude,
-                                    "longitude": position?.longitude
-                                  },
-                                ),
-                                // const PageViewWidget(),
+                              children: const [
+                                // OutletDetailsForm(
+                                //   controller: controller,
+                                //   data: {
+                                //     "capturedBy:": "Okwor",
+                                //     "date": date,
+                                //     "latitude": position?.latitude,
+                                //     "longitude": position?.longitude
+                                //   },
+                                // ),
+                                PageViewWidget(),
                                 // const CompetitionReviewForm()
                               ],
                             ),

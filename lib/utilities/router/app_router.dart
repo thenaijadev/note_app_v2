@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:netapp/app/data/models/outlet.dart';
 import 'package:netapp/app/presentation/screens/error.dart';
 import 'package:netapp/app/presentation/screens/home.dart';
+import 'package:netapp/app/presentation/screens/new/add_sku_screen.dart';
 import 'package:netapp/app/presentation/screens/new/competition_review_table.dart';
 import 'package:netapp/app/presentation/screens/new/data_capture_form.dart';
 import 'package:netapp/app/presentation/screens/new/options.dart';
@@ -47,6 +48,11 @@ class AppRouter {
       case Routes.outlets:
         return MaterialPageRoute(
           builder: (_) => const OutletTable(),
+        );
+
+      case Routes.skuForm:
+        return MaterialPageRoute(
+          builder: (_) => const SkuScreen(),
         );
       case Routes.reviews:
         return MaterialPageRoute(

@@ -47,7 +47,7 @@ class _OutletDataState extends ConsumerState<OutletTable> {
       filteredOutlets = outlet.outlets.where((element) {
         return element.date == date;
       }).toList();
-
+      print(filteredOutlets);
       return filteredOutlets;
     }
 
@@ -159,11 +159,23 @@ class _OutletDataState extends ConsumerState<OutletTable> {
   }
 }
 
-class MobileDataTable extends StatelessWidget {
+class MobileDataTable extends StatefulWidget {
   const MobileDataTable(
       {super.key, required this.outletList, required this.index});
   final List<Outlet?>? outletList;
   final int index;
+
+  @override
+  State<MobileDataTable> createState() => _MobileDataTableState();
+}
+
+class _MobileDataTableState extends State<MobileDataTable> {
+  @override
+  void initState() {
+    print({"outletList": widget.outletList});
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -185,14 +197,14 @@ class MobileDataTable extends StatelessWidget {
                   color: Colors.white,
                 ),
                 TextWidget(
-                  text: outletList?[index]?.name!,
+                  text: widget.outletList?[widget.index]?.name!,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
                 GestureDetector(
                   onTap: () {
                     Navigator.pushNamed(context, Routes.productsTable,
-                        arguments: outletList?[index]);
+                        arguments: widget.outletList?[widget.index]);
                   },
                   child: Container(
                     padding: const EdgeInsets.all(5),
@@ -210,44 +222,61 @@ class MobileDataTable extends StatelessWidget {
               ],
             ),
           ),
-          DataRowWidget(label: "Date entered", value: outletList?[index]?.date),
+          DataRowWidget(
+              label: "Date entered",
+              value: widget.outletList?[widget.index]?.date),
+          const HeaderUnderline(height: 1, color: AppColors.hintColor),
+
+          //  DataRowWidget(
+          //     label: "Last visited",
+          //     value: widget.outletList?[widget.index]?.products?.last
+          //                 .dateEntered ==
+          //             DateFormat.yMMMMd().format(DateTime.now())
+          //         ? "Today"
+          //         : widget.outletList?[widget.index]?.products?.last
+          //             .dateEntered)
+
           const HeaderUnderline(height: 1, color: AppColors.hintColor),
           DataRowWidget(
-              label: "Last visited",
-              value: outletList?[index]?.products?.last.dateEntered ==
-                      DateFormat.yMMMMd().format(DateTime.now())
-                  ? "Today"
-                  : outletList?[index]?.products?.last.dateEntered),
-          const HeaderUnderline(height: 1, color: AppColors.hintColor),
-          DataRowWidget(label: "Address", value: outletList?[index]?.address),
-          const HeaderUnderline(height: 1, color: AppColors.hintColor),
-          DataRowWidget(label: "State", value: outletList?[index]?.state),
-          const HeaderUnderline(height: 1, color: AppColors.hintColor),
-          DataRowWidget(label: "City", value: outletList?[index]?.city),
-          const HeaderUnderline(height: 1, color: AppColors.hintColor),
-          DataRowWidget(label: "Region", value: outletList?[index]?.region),
-          const HeaderUnderline(height: 1, color: AppColors.hintColor),
-          DataRowWidget(label: "Channel", value: outletList?[index]?.channel),
+              label: "Address",
+              value: widget.outletList?[widget.index]?.address),
           const HeaderUnderline(height: 1, color: AppColors.hintColor),
           DataRowWidget(
-              label: "Sub-channel", value: outletList?[index]?.subChannel),
+              label: "State", value: widget.outletList?[widget.index]?.state),
           const HeaderUnderline(height: 1, color: AppColors.hintColor),
           DataRowWidget(
-              label: "Manager's name", value: outletList?[index]?.managerName),
+              label: "City", value: widget.outletList?[widget.index]?.city),
+          const HeaderUnderline(height: 1, color: AppColors.hintColor),
+          DataRowWidget(
+              label: "Region", value: widget.outletList?[widget.index]?.region),
+          const HeaderUnderline(height: 1, color: AppColors.hintColor),
+          DataRowWidget(
+              label: "Channel",
+              value: widget.outletList?[widget.index]?.channel),
+          const HeaderUnderline(height: 1, color: AppColors.hintColor),
+          DataRowWidget(
+              label: "Sub-channel",
+              value: widget.outletList?[widget.index]?.subChannel),
+          const HeaderUnderline(height: 1, color: AppColors.hintColor),
+          DataRowWidget(
+              label: "Manager's name",
+              value: widget.outletList?[widget.index]?.managerName),
           const HeaderUnderline(height: 1, color: AppColors.hintColor),
           DataRowWidget(
               label: "Manager's phone",
-              value: outletList?[index]?.managerPhoneNumber),
+              value: widget.outletList?[widget.index]?.managerPhoneNumber),
           const HeaderUnderline(height: 1, color: AppColors.hintColor),
-          DataRowWidget(label: "Supplier", value: outletList?[index]?.supplier),
+          DataRowWidget(
+              label: "Supplier",
+              value: widget.outletList?[widget.index]?.supplier),
           const HeaderUnderline(height: 1, color: AppColors.hintColor),
           DataRowWidget(
               label: "Latitude",
-              value: outletList?[index]?.latitude.toString()),
+              value: widget.outletList?[widget.index]?.latitude.toString()),
           const HeaderUnderline(height: 1, color: AppColors.hintColor),
           DataRowWidget(
               label: "Longitude",
-              value: outletList?[index]?.longitude.toString()),
+              value: widget.outletList?[widget.index]?.longitude.toString()),
           const HeaderUnderline(height: 1, color: AppColors.hintColor),
         ],
       ),

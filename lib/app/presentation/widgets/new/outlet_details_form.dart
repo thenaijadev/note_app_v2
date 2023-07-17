@@ -7,6 +7,7 @@ import 'package:netapp/app/presentation/widgets/title_text.dart';
 import 'package:netapp/app/providers/state_providers.dart';
 import 'package:netapp/utilities/constants.dart/app_colors.dart';
 import 'package:netapp/utilities/lists.dart';
+import 'package:netapp/utilities/router/routes.dart';
 
 class OutletDetailsForm extends ConsumerStatefulWidget {
   const OutletDetailsForm(
@@ -47,8 +48,11 @@ class _OutletDetailsFormState extends ConsumerState<OutletDetailsForm> {
         region: region!,
         channel: channel!,
         subChannel: subChannel!);
-    widget.controller.animateTo(1,
-        duration: const Duration(seconds: 1), curve: Curves.bounceIn);
+
+    Navigator.pushNamed(context, Routes.outlets);
+
+    // widget.controller.animateTo(1,
+    //     duration: const Duration(seconds: 1), curve: Curves.bounceIn);
   }
 
   @override
@@ -141,6 +145,7 @@ class _OutletDetailsFormState extends ConsumerState<OutletDetailsForm> {
                   ),
                   onPressed: () async {
                     createOutlet();
+                    // Navigator.pushNamed(context, Routes.outlets);
                   },
                   child: const TextWidget(
                     text: "Next",
