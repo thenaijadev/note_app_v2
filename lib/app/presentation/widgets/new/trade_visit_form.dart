@@ -211,7 +211,8 @@ class _TradeVisitFormState extends ConsumerState<TradeVisitForm> {
                       ),
                       onPressed: () {
                         Navigator.pushNamed(context, Routes.outlets);
-                        outlet.addProductToList(
+
+                        outlet.updateOutlet("",
                             price: double.parse(
                                 formfieldkey_1.currentState?.value),
                             newPrice: double.parse(

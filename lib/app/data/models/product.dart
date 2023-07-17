@@ -4,7 +4,9 @@ import 'dart:convert';
 class Product {
   Product(
       {required this.channel,
+      required this.id,
       required this.brand,
+      required this.dateEntered,
       required this.sku,
       required this.category,
       required this.isAvailable,
@@ -16,7 +18,9 @@ class Product {
       this.image});
   final String brand;
   final String sku;
+  final String dateEntered;
   final String category;
+  final String id;
   final bool isAvailable;
   final bool isOutOfStock;
   final String channel;
@@ -28,7 +32,7 @@ class Product {
 
   @override
   String toString() {
-    return 'Product(brand: $brand, sku: $sku, category: $category, isAvailable: $isAvailable, isOutOfStock: $isOutOfStock, channel: $channel, isNewListing: $isNewListing, price: $price, hasPriceChanged: $hasPriceChanged, newPrice: $newPrice, image: $image, )';
+    return 'Product(brand: $brand, sku: $sku, category: $category, id:$id, isAvailable: $isAvailable, isOutOfStock: $isOutOfStock, channel: $channel, isNewListing: $isNewListing, price: $price, hasPriceChanged: $hasPriceChanged, newPrice: $newPrice, image: $image, )';
   }
 
 // TODO:The ish
@@ -37,6 +41,7 @@ class Product {
       'brand': brand,
       'sku': sku,
       'category': category,
+      "id": id,
       'isAvailable': isAvailable,
       'isOutOfStock': isOutOfStock,
       'channel': channel,
@@ -44,12 +49,15 @@ class Product {
       'price': price,
       'hasPriceChanged': hasPriceChanged,
       'newPrice': newPrice,
+      "dateEntered": dateEntered,
       'image': image,
     };
   }
 
   factory Product.fromMap(Map<dynamic, dynamic> map) {
     return Product(
+      id: map["id"] as String,
+      dateEntered: map["dateEntered"] as String,
       brand: map['brand'] as String,
       sku: map['sku'] as String,
       category: map['category'] as String,

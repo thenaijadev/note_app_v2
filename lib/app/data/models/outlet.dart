@@ -9,6 +9,7 @@ import 'package:netapp/app/data/models/product.dart';
 class Outlet {
   Outlet(
       {this.date,
+      this.id,
       this.capturedBy,
       this.latitude,
       this.longitude,
@@ -25,6 +26,7 @@ class Outlet {
       this.products});
   final String? date;
   final String? capturedBy;
+  final String? id;
   final double? latitude;
   final double? longitude;
   final String? name;
@@ -37,7 +39,7 @@ class Outlet {
   final String? managerName;
   final String? managerPhoneNumber;
   final String? supplier;
-  final List<Product>? products;
+  List<Product>? products;
 
   Outlet copyWith({
     String? date,
@@ -58,6 +60,7 @@ class Outlet {
   }) {
     return Outlet(
       date: date ?? this.date,
+      id: id ?? id,
       capturedBy: capturedBy ?? this.capturedBy,
       latitude: latitude ?? this.latitude,
       longitude: longitude ?? this.longitude,
@@ -77,11 +80,12 @@ class Outlet {
 
   @override
   String toString() {
-    return 'Outlet(date: $date, capturedBy: $capturedBy, latitude: $latitude, longitude: $longitude, name: $name, address: $address, state: $state, city: $city, region: $region, channel: $channel, subChannel: $subChannel, managerName: $managerName, managerPhoneNumber: $managerPhoneNumber, supplier: $supplier, products: $products)';
+    return 'Outlet(date: $date, capturedBy: $capturedBy, latitude: $latitude,id:$id, longitude: $longitude, name: $name, address: $address, state: $state, city: $city, region: $region, channel: $channel, subChannel: $subChannel, managerName: $managerName, managerPhoneNumber: $managerPhoneNumber, supplier: $supplier, products: $products)';
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      "id": id,
       'date': date,
       'capturedBy': capturedBy,
       'latitude': latitude,
@@ -111,6 +115,7 @@ class Outlet {
 
     return Outlet(
       date: map['date'] != null ? map['date'] as String : null,
+      id: map["id"] != null ? map["id"] as String : null,
       capturedBy:
           map['capturedBy'] != null ? map['capturedBy'] as String : null,
       latitude: map['latitude'] != null ? map['latitude'] as double : null,
@@ -148,6 +153,7 @@ class Outlet {
         other.longitude == longitude &&
         other.name == name &&
         other.address == address &&
+        other.id == id &&
         other.state == state &&
         other.city == city &&
         other.region == region &&
@@ -169,6 +175,7 @@ class Outlet {
         address.hashCode ^
         state.hashCode ^
         city.hashCode ^
+        id.hashCode ^
         region.hashCode ^
         channel.hashCode ^
         subChannel.hashCode ^

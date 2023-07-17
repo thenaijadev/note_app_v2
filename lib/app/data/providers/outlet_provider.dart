@@ -1,9 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:netapp/app/data/models/competition_review.dart';
 import 'package:netapp/app/data/models/outlet.dart';
 import 'package:netapp/app/data/models/product.dart';
 import 'package:netapp/utilities/logger.dart';
+import 'package:uuid/uuid.dart';
 
 class OutletNotifier extends StateNotifier<List<Outlet>> {
   Outlet? _outlet;
@@ -19,6 +21,8 @@ class OutletNotifier extends StateNotifier<List<Outlet>> {
 
   List<Product> get products => _products;
   final outletBox = Hive.box("outlet_box");
+
+  var uuid = const Uuid();
 
   void createOutlet(
       {required date,
@@ -37,6 +41,7 @@ class OutletNotifier extends StateNotifier<List<Outlet>> {
       required supplier}) async {
     _outlet = Outlet(
         date: date,
+        id: uuid.v4(),
         capturedBy: capturedBy,
         latitude: latitude,
         longitude: longitude,
@@ -75,6 +80,8 @@ class OutletNotifier extends StateNotifier<List<Outlet>> {
       required newPrice,
       image}) async {
     final Product product = Product(
+        id: uuid.v4(),
+        dateEntered: DateFormat.yMMMMd().format(DateTime.now()),
         channel: channel,
         brand: brand,
         sku: sku,
@@ -126,6 +133,49 @@ class OutletNotifier extends StateNotifier<List<Outlet>> {
 
     final todayOutlet = list.where((element) => element.date == date);
     return todayOutlet.length;
+  }
+
+  updateOutlet(String id,
+      {required brand,
+      required sku,
+      required channel,
+      required category,
+      required isAvailable,
+      required isOutOfStock,
+      required isNewListing,
+      required price,
+      required hasPriceChanged,
+      required newPrice,
+      image}) async {
+    final product = Product(
+        price: price,
+        id: uuid.v4(),
+        dateEntered: DateFormat.yMMMMd().format(DateTime.now()),
+        newPrice: newPrice,
+        brand: brand!,
+        isOutOfStock: isOutOfStock!,
+        isNewListing: isNewListing,
+        hasPriceChanged: hasPriceChanged!,
+        sku: sku,
+        category: category,
+        channel: channel,
+        isAvailable: isAvailable);
+    List<Outlet> itemList = outletBox.values.cast<Map>().map((itemMap) {
+      return Outlet.fromMap(itemMap);
+    }).toList();
+
+    int indexToUpdate = itemList.indexWhere((item) => item.id == id);
+
+    if (indexToUpdate != -1) {
+      List<Product>? itemToUpdateProducts = itemList[indexToUpdate].products;
+      List<Product>? updatatedProducts = [...itemToUpdateProducts!, product];
+      itemList[indexToUpdate].products = updatatedProducts;
+
+      outletBox.clear(); // Clear the box before adding updated items
+      outletBox.addAll(itemList.map((item) => item.toMap()));
+      state = await getOutlets();
+      print(state);
+    }
   }
 }
 

@@ -36,7 +36,7 @@ class _OutletDataState extends ConsumerState<OutletTable> {
   Widget build(BuildContext context) {
     final outlet = ref.watch(outletProvider.notifier);
 
-    Future.delayed(const Duration(seconds: 1), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       outlet.getOutlets();
       setState(() {});
     });
@@ -211,6 +211,13 @@ class MobileDataTable extends StatelessWidget {
             ),
           ),
           DataRowWidget(label: "Date entered", value: outletList?[index]?.date),
+          const HeaderUnderline(height: 1, color: AppColors.hintColor),
+          DataRowWidget(
+              label: "Last visited",
+              value: outletList?[index]?.products?.last.dateEntered ==
+                      DateFormat.yMMMMd().format(DateTime.now())
+                  ? "Today"
+                  : outletList?[index]?.products?.last.dateEntered),
           const HeaderUnderline(height: 1, color: AppColors.hintColor),
           DataRowWidget(label: "Address", value: outletList?[index]?.address),
           const HeaderUnderline(height: 1, color: AppColors.hintColor),

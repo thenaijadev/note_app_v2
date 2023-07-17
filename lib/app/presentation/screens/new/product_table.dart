@@ -104,7 +104,7 @@ class MobileDataTableProducts extends StatelessWidget {
                   color: Colors.white,
                 ),
                 TextWidget(
-                  text: "${outlet.date}",
+                  text: productList[index].dateEntered,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
