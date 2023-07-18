@@ -5,6 +5,7 @@ class Product {
   Product(
       {required this.channel,
       required this.id,
+      required this.outletId,
       required this.brand,
       required this.dateEntered,
       required this.sku,
@@ -18,6 +19,7 @@ class Product {
       this.image});
   final String brand;
   final String sku;
+  final String outletId;
   final String dateEntered;
   final String category;
   final String id;
@@ -32,12 +34,13 @@ class Product {
 
   @override
   String toString() {
-    return 'Product(brand: $brand, sku: $sku, category: $category, id:$id, isAvailable: $isAvailable, isOutOfStock: $isOutOfStock, channel: $channel, isNewListing: $isNewListing, price: $price, hasPriceChanged: $hasPriceChanged, newPrice: $newPrice, image: $image, )';
+    return 'Product(brand: $brand, sku: $sku, sku: $outletId,, category: $category, id:$id, isAvailable: $isAvailable, isOutOfStock: $isOutOfStock, channel: $channel, isNewListing: $isNewListing, price: $price, hasPriceChanged: $hasPriceChanged, newPrice: $newPrice, image: $image, )';
   }
 
 // TODO:The ish
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      "outletId": outletId,
       'brand': brand,
       'sku': sku,
       'category': category,
@@ -56,6 +59,7 @@ class Product {
 
   factory Product.fromMap(Map<dynamic, dynamic> map) {
     return Product(
+      outletId: map["outletId"] as String,
       id: map["id"] as String,
       dateEntered: map["dateEntered"] as String,
       brand: map['brand'] as String,

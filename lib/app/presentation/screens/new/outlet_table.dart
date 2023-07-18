@@ -32,14 +32,22 @@ class _OutletDataState extends ConsumerState<OutletTable> {
 
   String formattedDate = DateFormat.yMMMMd().format(DateTime.now());
 
+  bool _isFunctionExecuted = false;
+
+  void runFunctionOnce(outlet) {
+    if (!_isFunctionExecuted) {
+      Future.delayed(const Duration(milliseconds: 100), () {
+        outlet.getOutlets();
+        setState(() {});
+      });
+      _isFunctionExecuted = true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final outlet = ref.watch(outletProvider.notifier);
-
-    Future.delayed(const Duration(milliseconds: 100), () {
-      outlet.getOutlets();
-      setState(() {});
-    });
+    runFunctionOnce(outlet);
 
     List<Outlet>? filterOutlets(
       date,
@@ -47,9 +55,11 @@ class _OutletDataState extends ConsumerState<OutletTable> {
       filteredOutlets = outlet.outlets.where((element) {
         return element.date == date;
       }).toList();
-      print(filteredOutlets);
+
       return filteredOutlets;
     }
+
+    setState(() {});
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -172,7 +182,6 @@ class MobileDataTable extends StatefulWidget {
 class _MobileDataTableState extends State<MobileDataTable> {
   @override
   void initState() {
-    print({"outletList": widget.outletList});
     super.initState();
   }
 
@@ -204,7 +213,7 @@ class _MobileDataTableState extends State<MobileDataTable> {
                 GestureDetector(
                   onTap: () {
                     Navigator.pushNamed(context, Routes.productsTable,
-                        arguments: widget.outletList?[widget.index]);
+                        arguments: widget.outletList?[widget.index]?.id);
                   },
                   child: Container(
                     padding: const EdgeInsets.all(5),

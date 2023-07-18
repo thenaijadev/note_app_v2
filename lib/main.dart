@@ -11,6 +11,7 @@ void main() async {
   await Hive.initFlutter();
   await Hive.openBox("outlet_box");
   await Hive.openBox("competition_reviews");
+  await Hive.openBox("products");
 
   HydratedBloc.storage = await HydratedStorage.build(
       storageDirectory: await getApplicationDocumentsDirectory());

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:netapp/app/data/providers/outlet_provider.dart';
 import 'package:netapp/app/presentation/widgets/title_text.dart';
 import 'package:netapp/utilities/constants.dart/app_colors.dart';
 import 'package:netapp/utilities/router/routes.dart';
@@ -19,14 +18,7 @@ class _TodayDetailsState extends State<TodayDetails> {
 
   @override
   void initState() {
-    getNumber();
-    setState(() {});
     super.initState();
-  }
-
-  getNumber() async {
-    outletCount = await OutletNotifier().getOutletsTodayNumber(date);
-    setState(() {});
   }
 
   @override
@@ -41,6 +33,7 @@ class _TodayDetailsState extends State<TodayDetails> {
               child: Card(
                 elevation: 30,
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     const SizedBox(
                       height: 20,
@@ -89,12 +82,12 @@ class _TodayDetailsState extends State<TodayDetails> {
                       value: date,
                     ),
                     const HorizontalDivider(width: 500),
-                    DataRowWidget(
-                      label: "Outlets captured today:",
-                      value: outletCount.toString(),
-                    ),
-                    const HorizontalDivider(width: 500),
-                    const HorizontalDivider(width: 500),
+                    // DataRowWidget(
+                    //   label: "Outlets captured today:",
+                    //   value: outletCount.toString(),
+                    // ),
+                    // const HorizontalDivider(width: 500),
+
                     const SizedBox(
                       height: 90,
                     ),

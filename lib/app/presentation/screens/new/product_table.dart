@@ -1,39 +1,64 @@
 import 'package:animation_search_bar/animation_search_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:netapp/app/data/models/outlet.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:netapp/app/data/models/product.dart';
 import 'package:netapp/app/presentation/screens/new/today_details.dart';
 import 'package:netapp/app/presentation/widgets/new/header_underline.dart';
 import 'package:netapp/app/presentation/widgets/title_text.dart';
+import 'package:netapp/app/providers/state_providers.dart';
 import 'package:netapp/utilities/constants.dart/app_colors.dart';
 import 'package:netapp/utilities/router/routes.dart';
 
-class ProductsTable extends StatefulWidget {
-  const ProductsTable({
-    super.key,
-    required this.outlet,
-  });
-  final Outlet outlet;
+class ProductsTable extends ConsumerStatefulWidget {
+  const ProductsTable({super.key, required this.id});
+
+  final String id;
 
   @override
-  State<ProductsTable> createState() => _ProductsTableState();
+  ConsumerState<ProductsTable> createState() => _ProductsTableState();
 }
 
-class _ProductsTableState extends State<ProductsTable> {
+class _ProductsTableState extends ConsumerState<ProductsTable> {
   late TextEditingController controller;
-  late List<Product>? products;
+
   @override
   void initState() {
-    products = widget.outlet.products;
-    Future.delayed(const Duration(seconds: 1), () {
-      setState(() {});
-    });
     controller = TextEditingController();
+
     super.initState();
+  }
+
+  List<Product> filteredProducts = [];
+
+  String formattedDate = DateFormat.yMMMMd().format(DateTime.now());
+
+  bool _isFunctionExecuted = false;
+
+  void runFunctionOnce(product) {
+    if (!_isFunctionExecuted) {
+      Future.delayed(const Duration(milliseconds: 100), () {
+        product.getProducts();
+        setState(() {});
+      });
+      _isFunctionExecuted = true;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final product = ref.watch(productsProvider.notifier);
+
+    runFunctionOnce(product);
+
+    List<Product>? filterProducts() {
+      filteredProducts = product.products.where((element) {
+        return element.outletId == widget.id;
+      }).toList();
+
+      return filteredProducts;
+    }
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -47,19 +72,20 @@ class _ProductsTableState extends State<ProductsTable> {
           SizedBox(
               height: MediaQuery.of(context).size.height * 0.8,
               child: ListView.builder(
-                  itemCount: products?.length,
+                  itemCount: filterProducts()?.length,
                   itemBuilder: (BuildContext context, index) {
                     return MobileDataTableProducts(
-                        productList: products!,
-                        index: index,
-                        outlet: widget.outlet);
+                      productList: filterProducts()!,
+                      index: index,
+                    );
                   }))
         ]),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color.fromARGB(255, 0, 44, 139),
         onPressed: () {
-          Navigator.pushReplacementNamed(context, Routes.skuForm);
+          Navigator.pushReplacementNamed(context, Routes.skuForm,
+              arguments: widget.id);
         },
         child: const Icon(
           Icons.add,
@@ -71,14 +97,14 @@ class _ProductsTableState extends State<ProductsTable> {
 }
 
 class MobileDataTableProducts extends StatelessWidget {
-  const MobileDataTableProducts(
-      {super.key,
-      required this.productList,
-      required this.index,
-      required this.outlet});
+  const MobileDataTableProducts({
+    super.key,
+    required this.productList,
+    required this.index,
+  });
   final List<Product> productList;
   final int index;
-  final Outlet outlet;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -99,11 +125,7 @@ class MobileDataTableProducts extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
-                TextWidget(
-                  text: "${outlet.name}",
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
+
                 TextWidget(
                   text: productList[index].dateEntered,
                   fontWeight: FontWeight.bold,

@@ -2,21 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:netapp/app/presentation/screens/new/today_details.dart';
+import 'package:netapp/app/presentation/widgets/new/competition_review_form.dart';
 import 'package:netapp/app/presentation/widgets/new/header_underline.dart';
-import 'package:netapp/app/presentation/widgets/new/outlet_details_form.dart';
 import 'package:netapp/app/presentation/widgets/title_text.dart';
 import 'package:netapp/utilities/constants.dart/app_colors.dart';
 import 'package:netapp/utilities/geolocator.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 
-class DataCatureScreen extends StatefulWidget {
-  const DataCatureScreen({super.key});
+class CompetitionReviewFormScreen extends StatefulWidget {
+  const CompetitionReviewFormScreen({super.key});
 
   @override
-  State<DataCatureScreen> createState() => _DataCatureScreenState();
+  State<CompetitionReviewFormScreen> createState() =>
+      _CompetitionReviewFormScreenState();
 }
 
-class _DataCatureScreenState extends State<DataCatureScreen>
+class _CompetitionReviewFormScreenState
+    extends State<CompetitionReviewFormScreen>
     with SingleTickerProviderStateMixin {
   final StopWatchTimer _stopWatchTimer = StopWatchTimer();
   Position? position;
@@ -126,36 +128,16 @@ class _DataCatureScreenState extends State<DataCatureScreen>
                               indicatorWeight: 2,
                               tabs: const [
                                 TextWidget(
-                                  text: "Outlet details",
+                                  text: "Competition Review",
                                   fontSize: 14,
                                 ),
-                                // TextWidget(
-                                //   text: "Trade visit",
-                                //   fontSize: 14,
-                                // ),
-                                // TextWidget(
-                                //   text: "Competition Review",
-                                //   fontSize: 14,
-                                // ),
                               ]),
                           SizedBox(
                             height: 1200,
                             child: TabBarView(
                               physics: const NeverScrollableScrollPhysics(),
                               controller: controller,
-                              children: [
-                                OutletDetailsForm(
-                                  controller: controller,
-                                  data: {
-                                    "capturedBy:": "Okwor",
-                                    "date": date,
-                                    "latitude": position?.latitude,
-                                    "longitude": position?.longitude
-                                  },
-                                ),
-                                // const PageViewWidget(),
-                                // const CompetitionReviewForm()
-                              ],
+                              children: const [CompetitionReviewForm()],
                             ),
                           ),
                         ],

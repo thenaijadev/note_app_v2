@@ -10,8 +10,8 @@ import 'package:netapp/utilities/geolocator.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 
 class SkuScreen extends StatefulWidget {
-  const SkuScreen({super.key});
-
+  const SkuScreen({super.key, required this.id});
+  final String id;
   @override
   State<SkuScreen> createState() => _SkuScreenState();
 }
@@ -90,7 +90,7 @@ class _SkuScreenState extends State<SkuScreen>
                               builder: (context, snap) {
                                 final value = snap.data;
                                 displayTime = StopWatchTimer.getDisplayTime(
-                                    value!,
+                                    value ?? 0,
                                     milliSecond: false);
                                 return DataRowWidget(
                                   label: "Total time spent:",
@@ -138,11 +138,11 @@ class _SkuScreenState extends State<SkuScreen>
                                 // ),
                               ]),
                           SizedBox(
-                            height: 1200,
+                            height: 1250,
                             child: TabBarView(
                               physics: const NeverScrollableScrollPhysics(),
                               controller: controller,
-                              children: const [
+                              children: [
                                 // OutletDetailsForm(
                                 //   controller: controller,
                                 //   data: {
@@ -152,7 +152,8 @@ class _SkuScreenState extends State<SkuScreen>
                                 //     "longitude": position?.longitude
                                 //   },
                                 // ),
-                                PageViewWidget(),
+                                PageViewWidget(id: widget.id),
+
                                 // const CompetitionReviewForm()
                               ],
                             ),

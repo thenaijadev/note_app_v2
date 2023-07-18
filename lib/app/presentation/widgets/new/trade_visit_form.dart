@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:netapp/app/presentation/screens/new/today_details.dart';
 import 'package:netapp/app/presentation/widgets/new/edit_bottom_sheet_widget.dart';
 import 'package:netapp/app/presentation/widgets/input_field_widget.dart';
@@ -11,8 +12,10 @@ import 'package:netapp/utilities/router/routes.dart';
 
 class TradeVisitForm extends ConsumerStatefulWidget {
   const TradeVisitForm({
+    required this.id,
     super.key,
   });
+  final String id;
 
   @override
   ConsumerState<TradeVisitForm> createState() => _TradeVisitFormState();
@@ -39,8 +42,14 @@ class _TradeVisitFormState extends ConsumerState<TradeVisitForm> {
   bool? hasPriceChanged;
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final outlet = ref.read(outletProvider.notifier);
+    final product = ref.read(productsProvider.notifier);
+
     return Form(
       key: _formKey,
       child: Column(
@@ -155,88 +164,94 @@ class _TradeVisitFormState extends ConsumerState<TradeVisitForm> {
                 height: 20,
               ),
               // const TextWidget(
-              //   text: "Competition review (Not mandatory)",
-              //   fontSize: 18,
-              // ),
-              // InputFieldWidget(
-              //     label: "What brand is activated",
-              //     hintText: "",
-              //     onChanged: (val) {},
-              //     textFieldkey: formfieldkey_3),
-              // InputFieldWidget(
-              //     label: "What activation",
-              //     hintText: "",
-              //     onChanged: (val) {},
-              //     textFieldkey: formfieldkey_4),
-              // InputFieldWidget(
-              //     label: "Additional information",
-              //     hintText: "",
-              //     onChanged: (val) {},
-              //     textFieldkey: formfieldkey_5),
-              // const Padding(
-              //   padding: EdgeInsets.only(right: 180.0, top: 20),
-              //   child: TextWidget(
-              //     text: "Add an image",
-              //     color: Color.fromARGB(255, 110, 111, 117),
-              //     fontSize: 14,
-              //   ),
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.only(right: 240, top: 10),
-              //   child: GestureDetector(
-              //     onTap: () {},
-              //     child: const CircleAvatar(
-              //       backgroundColor: Color.fromARGB(255, 0, 44, 139),
-              //       radius: 15,
-              //       child: Center(child: Icon(Icons.add)),
-              //     ),
-              //   ),
-              // ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10.0, top: 10),
-                child: Container(
-                  width: 272,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    border: Border.all(color: AppColors.inputBorder),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      style: const ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll(
-                          Color.fromARGB(255, 0, 44, 139),
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.pushNamed(context, Routes.outlets);
 
-                        outlet.updateOutlet("",
-                            price: double.parse(
-                                formfieldkey_1.currentState?.value),
-                            newPrice: double.parse(
-                                formfieldkey_2.currentState?.value),
-                            brand: brand!,
-                            isOutOfStock: isOutOfStock!,
-                            isNewListing: isNew!,
-                            hasPriceChanged: hasPriceChanged!,
-                            sku: sku,
-                            category: getCategory(sku),
-                            channel: getChannel(sku),
-                            isAvailable: isBrandAvailable!);
-                      },
-                      child: const TextWidget(
-                        text: "Next",
-                        color: AppColors.white,
-                        fontWeight: FontWeight.bold,
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      bottom: 10.0,
+                    ),
+                    child: Container(
+                      width: 272,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: AppColors.inputBorder),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton(
+                          style: const ButtonStyle(
+                            backgroundColor: MaterialStatePropertyAll(
+                              Color.fromARGB(255, 0, 44, 139),
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(context, Routes.productsTable,
+                                arguments: widget.id);
+
+                            product.createProduct(
+                                outletId: widget.id,
+                                price: double.parse(
+                                    formfieldkey_1.currentState?.value),
+                                newPrice: double.parse(
+                                    formfieldkey_2.currentState?.value),
+                                brand: brand!,
+                                isOutOfStock: isOutOfStock!,
+                                isNewListing: isNew!,
+                                hasPriceChanged: hasPriceChanged!,
+                                sku: sku,
+                                category: getCategory(sku),
+                                channel: getChannel(sku),
+                                isAvailable: isBrandAvailable!);
+                          },
+                          child: const TextWidget(
+                            text: "Next",
+                            color: AppColors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              )
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      bottom: 10.0,
+                    ),
+                    child: Container(
+                      width: 272,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: AppColors.inputBorder),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton(
+                          style: const ButtonStyle(
+                            backgroundColor: MaterialStatePropertyAll(
+                              Color.fromARGB(255, 0, 44, 139),
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(
+                              context,
+                              Routes.reviewForm,
+                            );
+                          },
+                          child: const TextWidget(
+                            text: "Competition review",
+                            color: AppColors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ]),
-          )
+          ),
         ],
       ),
     );
@@ -244,7 +259,8 @@ class _TradeVisitFormState extends ConsumerState<TradeVisitForm> {
 }
 
 class PageViewWidget extends StatefulWidget {
-  const PageViewWidget({super.key});
+  const PageViewWidget({super.key, required this.id});
+  final String id;
 
   @override
   State<PageViewWidget> createState() => _PageViewWidgetState();
@@ -269,7 +285,7 @@ class _PageViewWidgetState extends State<PageViewWidget> {
             child: PageView(
               physics: const NeverScrollableScrollPhysics(),
               controller: controller,
-              children: const [TradeVisitForm()],
+              children: [TradeVisitForm(id: widget.id)],
             ),
           ),
         ],
