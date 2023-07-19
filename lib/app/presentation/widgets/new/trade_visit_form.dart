@@ -187,7 +187,8 @@ class _TradeVisitFormState extends ConsumerState<TradeVisitForm> {
                             ),
                           ),
                           onPressed: () {
-                            Navigator.pushNamed(context, Routes.productsTable,
+                            Navigator.popAndPushNamed(
+                                context, Routes.productsTable,
                                 arguments: widget.id);
 
                             product.createProduct(

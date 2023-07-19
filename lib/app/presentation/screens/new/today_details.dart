@@ -160,8 +160,8 @@ class DataRowWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SizedBox(
-            width: 80,
+          Flexible(
+            flex: 1,
             child: SingleChildScrollView(
               child: TextWidget(
                 text: label!,
@@ -173,8 +173,8 @@ class DataRowWidget extends StatelessWidget {
           const SizedBox(
             width: 30,
           ),
-          SizedBox(
-            width: 80,
+          Flexible(
+            flex: 1,
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: TextWidget(text: value!, fontSize: 13),

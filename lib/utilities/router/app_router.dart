@@ -5,7 +5,6 @@ import 'package:netapp/app/presentation/screens/new/add_sku_screen.dart';
 import 'package:netapp/app/presentation/screens/new/competition_review_form_screen.dart';
 import 'package:netapp/app/presentation/screens/new/competition_review_table.dart';
 import 'package:netapp/app/presentation/screens/new/data_capture_form.dart';
-import 'package:netapp/app/presentation/screens/new/options.dart';
 import 'package:netapp/app/presentation/screens/new/outlet_table.dart';
 import 'package:netapp/app/presentation/screens/new/product_table.dart';
 import 'package:netapp/app/presentation/screens/new/today_details.dart';
@@ -34,7 +33,7 @@ class AppRouter {
         );
       case Routes.options:
         return MaterialPageRoute(
-          builder: (_) => const Options(),
+          builder: (_) => const OutletTable(),
         );
       // case Routes.details:
       //   var data = routeSettings.arguments as Map;
