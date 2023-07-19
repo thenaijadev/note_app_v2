@@ -126,7 +126,8 @@ class _MobileDataTableState extends State<MobileDataTable> {
               ),
             ),
             DataRowWidget(
-                label: "Date:", value: widget.outletList?[widget.index]?.date),
+                label: "Date Entered:",
+                value: widget.outletList?[widget.index]?.date),
             const HeaderUnderline(height: 1, color: AppColors.hintColor),
             DataRowWidget(
                 label: "Last Visited:",

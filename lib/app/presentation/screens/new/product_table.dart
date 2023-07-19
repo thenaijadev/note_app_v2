@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:netapp/app/data/models/product.dart';
 import 'package:netapp/app/presentation/screens/new/today_details.dart';
 import 'package:netapp/app/presentation/widgets/new/header_underline.dart';
+import 'package:netapp/app/presentation/widgets/new/label_card_product.dart';
 import 'package:netapp/app/presentation/widgets/title_text.dart';
 import 'package:netapp/app/providers/state_providers.dart';
 import 'package:netapp/utilities/constants.dart/app_colors.dart';
@@ -45,53 +46,93 @@ class _ProductsTableState extends ConsumerState<ProductsTable> {
     }
   }
 
+  bool showAll = true;
+
   @override
   Widget build(BuildContext context) {
     final product = ref.watch(productsProvider.notifier);
 
     runFunctionOnce(product);
 
-    List<Product>? filterProducts() {
-      filteredProducts = product.products.where((element) {
-        return element.outletId == widget.id;
-      }).toList();
+    final products = product.products.where((element) {
+      return element.outletId == widget.id;
+    }).toList();
 
-      return filteredProducts;
-    }
+    // List<Product>? filterProducts() {
+    //   filteredProducts = product.products.where((element) {
+    //     return element.outletId == widget.id;
+    //   }).toList();
+
+    //   return filteredProducts;
+    // }
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
-        child: Column(children: [
+        child: ListView(children: [
           AnimationSearchBar(
               backIconColor: Colors.black,
-              centerTitle: 'Products',
+              centerTitle: '',
               onChanged: (text) => debugPrint(text),
               searchTextEditingController: controller,
               horizontalPadding: 5),
-          SizedBox(
-              height: MediaQuery.of(context).size.height * 0.8,
-              child: ListView.builder(
-                  itemCount: filterProducts()?.length,
-                  itemBuilder: (BuildContext context, index) {
-                    return MobileDataTableProducts(
-                      productList: filterProducts()!,
-                      index: index,
-                    );
-                  }))
+          LabelCardProduct(
+            onTap: () {
+              Navigator.pushReplacementNamed(context, Routes.skuForm,
+                  arguments: widget.id);
+            },
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          // filteredProducts.isEmpty
+          //     ? const Center(
+          //         child: TextWidget(
+          //           text: "Add products",
+          //           fontWeight: FontWeight.bold,
+          //         ),
+          //       )
+          //     : SizedBox(
+          //         height: MediaQuery.of(context).size.height * 0.8,
+          //         child: ListView.builder(
+          //             itemCount: filterProducts()?.length,
+          //             itemBuilder: (BuildContext context, index) {
+          //               return MobileDataTableProducts(
+          //                 productList: filterProducts()!,
+          //                 index: index,
+          //               );
+          //             })),
+
+          products.isEmpty
+              ? const Center(
+                  child: TextWidget(
+                    text: "No Products to show",
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
+              : SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.8,
+                  child: ListView.builder(
+                      itemCount: products.length,
+                      itemBuilder: (BuildContext context, index) {
+                        return MobileDataTableProducts(
+                          productList: products,
+                          index: index,
+                        );
+                      }))
         ]),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color.fromARGB(255, 0, 44, 139),
-        onPressed: () {
-          Navigator.pushReplacementNamed(context, Routes.skuForm,
-              arguments: widget.id);
-        },
-        child: const Icon(
-          Icons.add,
-          size: 30,
-        ),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: const Color.fromARGB(255, 0, 44, 139),
+      //   onPressed: () {
+      //     Navigator.pushReplacementNamed(context, Routes.skuForm,
+      //         arguments: widget.id);
+      //   },
+      //   child: const Icon(
+      //     Icons.add,
+      //     size: 30,
+      //   ),
+      // ),
     );
   }
 }
@@ -112,7 +153,7 @@ class MobileDataTableProducts extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             decoration: BoxDecoration(
               color: const Color.fromARGB(255, 0, 44, 139),
               borderRadius: BorderRadius.circular(5),
@@ -120,71 +161,47 @@ class MobileDataTableProducts extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const TextWidget(
-                  text: "Outlet:",
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-
                 TextWidget(
                   text: productList[index].dateEntered,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
-                // GestureDetector(
-                //   onTap: () {
-                //     // Navigator.pushNamed(context, Routes.productsTable,
-                //     //     arguments: outletList[index]);
-                //   },
-                //   child: Container(
-                //     padding: const EdgeInsets.all(5),
-                //     decoration: BoxDecoration(
-                //         color: Colors.white,
-                //         borderRadius: BorderRadius.circular(10)),
-                //     child: const TextWidget(
-                //       text: "Trade visit",
-                //       fontWeight: FontWeight.bold,
-                //       color: Color.fromARGB(255, 0, 44, 139),
-                //       fontSize: 12,
-                //     ),
-                //   ),
-                // )
               ],
             ),
           ),
           DataRowWidget(label: "Brand", value: productList[index].brand),
           const HeaderUnderline(height: 1, color: AppColors.hintColor),
           DataRowWidget(label: "SKU", value: productList[index].sku),
-          const HeaderUnderline(height: 1, color: AppColors.hintColor),
-          DataRowWidget(label: "Category", value: productList[index].category),
-          const HeaderUnderline(height: 1, color: AppColors.hintColor),
-          DataRowWidget(label: "Channel", value: productList[index].channel),
-          const HeaderUnderline(height: 1, color: AppColors.hintColor),
-          DataRowWidget(
-              label: "Brand availability",
-              value: productList[index].isAvailable
-                  ? "Available"
-                  : "Not Available"),
-          const HeaderUnderline(height: 1, color: AppColors.hintColor),
-          DataRowWidget(
-              label: "In stock?",
-              value: productList[index].isOutOfStock ? "No" : "Yes"),
-          const HeaderUnderline(height: 1, color: AppColors.hintColor),
-          DataRowWidget(
-              label: "Is it new?",
-              value: productList[index].isNewListing ? "Yes" : "No"),
-          const HeaderUnderline(height: 1, color: AppColors.hintColor),
-          DataRowWidget(
-              label: "Price", value: productList[index].price.toString()),
-          const HeaderUnderline(height: 1, color: AppColors.hintColor),
-          DataRowWidget(
-              label: "Has it's price changed?",
-              value: productList[index].hasPriceChanged ? "Yes" : "No"),
-          const HeaderUnderline(height: 1, color: AppColors.hintColor),
-          DataRowWidget(
-              label: "New price",
-              value: productList[index].newPrice.toString()),
-          const HeaderUnderline(height: 1, color: AppColors.hintColor),
+          // const HeaderUnderline(height: 1, color: AppColors.hintColor),
+          // DataRowWidget(label: "Category", value: productList[index].category),
+          // const HeaderUnderline(height: 1, color: AppColors.hintColor),
+          // DataRowWidget(label: "Channel", value: productList[index].channel),
+          // const HeaderUnderline(height: 1, color: AppColors.hintColor),
+          // DataRowWidget(
+          //     label: "Brand availability",
+          //     value: productList[index].isAvailable
+          //         ? "Available"
+          //         : "Not Available"),
+          // const HeaderUnderline(height: 1, color: AppColors.hintColor),
+          // DataRowWidget(
+          //     label: "In stock?",
+          //     value: productList[index].isOutOfStock ? "No" : "Yes"),
+          // const HeaderUnderline(height: 1, color: AppColors.hintColor),
+          // DataRowWidget(
+          //     label: "Is it new?",
+          //     value: productList[index].isNewListing ? "Yes" : "No"),
+          // const HeaderUnderline(height: 1, color: AppColors.hintColor),
+          // DataRowWidget(
+          //     label: "Price", value: productList[index].price.toString()),
+          // const HeaderUnderline(height: 1, color: AppColors.hintColor),
+          // DataRowWidget(
+          //     label: "Has it's price changed?",
+          //     value: productList[index].hasPriceChanged ? "Yes" : "No"),
+          // const HeaderUnderline(height: 1, color: AppColors.hintColor),
+          // DataRowWidget(
+          //     label: "New price",
+          //     value: productList[index].newPrice.toString()),
+          // const HeaderUnderline(height: 1, color: AppColors.hintColor),
         ],
       ),
     );

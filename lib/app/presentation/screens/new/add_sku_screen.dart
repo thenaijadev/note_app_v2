@@ -143,15 +143,6 @@ class _SkuScreenState extends State<SkuScreen>
                               physics: const NeverScrollableScrollPhysics(),
                               controller: controller,
                               children: [
-                                // OutletDetailsForm(
-                                //   controller: controller,
-                                //   data: {
-                                //     "capturedBy:": "Okwor",
-                                //     "date": date,
-                                //     "latitude": position?.latitude,
-                                //     "longitude": position?.longitude
-                                //   },
-                                // ),
                                 PageViewWidget(id: widget.id),
 
                                 // const CompetitionReviewForm()

@@ -3,12 +3,14 @@ import 'package:intl/intl.dart';
 import 'package:netapp/app/presentation/screens/new/today_details.dart';
 import 'package:netapp/app/presentation/widgets/title_text.dart';
 import 'package:netapp/utilities/constants.dart/app_colors.dart';
-import 'package:netapp/utilities/router/routes.dart';
 
-class LabelCard extends StatelessWidget {
-  const LabelCard({
+class LabelCardProduct extends StatelessWidget {
+  const LabelCardProduct({
     super.key,
+    required this.onTap,
   });
+
+  final void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -59,32 +61,21 @@ class LabelCard extends StatelessWidget {
             ],
           ),
           const SizedBox(
-            height: 30,
+            height: 20,
           ),
           const HorizontalDivider(width: 500),
-
           DataRowWidget(
             label: "Date:",
             value: date,
           ),
           const HorizontalDivider(width: 500),
-          // DataRowWidget(
-          //   label: "Outlets captured today:",
-          //   value: outletCount.toString(),
-          // ),
-          // const HorizontalDivider(width: 500),
-
-          const SizedBox(
-            height: 90,
-          ),
-          const HorizontalDivider(width: 500),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 25),
+            padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 25),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const TextWidget(
-                  text: "Register new outlet",
+                  text: "Add new SKU",
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),
@@ -95,11 +86,9 @@ class LabelCard extends StatelessWidget {
                     style: ButtonStyle(
                         backgroundColor: MaterialStateColor.resolveWith(
                             (states) => const Color.fromARGB(255, 0, 44, 139))),
-                    onPressed: () {
-                      Navigator.pushNamed(context, Routes.dataCapture);
-                    },
+                    onPressed: onTap,
                     child: const TextWidget(
-                      text: "Start",
+                      text: "Add",
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ))

@@ -132,7 +132,9 @@ showImageAlertDialog(BuildContext context, image) {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              image!,
+              Flexible(
+                child: image!,
+              ),
               const SizedBox(height: 10),
             ],
           ),

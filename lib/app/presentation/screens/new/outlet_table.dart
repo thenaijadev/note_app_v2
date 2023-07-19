@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:netapp/app/data/models/outlet.dart';
-import 'package:netapp/app/presentation/widgets/new/label_card.dart';
+import 'package:netapp/app/presentation/widgets/new/label_card_outlets.dart';
 import 'package:netapp/app/presentation/widgets/new/mobile_data_table.dart';
 import 'package:netapp/app/presentation/widgets/title_text.dart';
 import 'package:netapp/app/providers/state_providers.dart';
@@ -49,6 +49,7 @@ class _OutletDataState extends ConsumerState<OutletTable> {
   Widget build(BuildContext context) {
     final outlet = ref.watch(outletProvider.notifier);
     runFunctionOnce(outlet);
+
     List<Outlet>? filterOutlets(
       date,
     ) {
@@ -59,7 +60,7 @@ class _OutletDataState extends ConsumerState<OutletTable> {
       return filteredOutlets;
     }
 
-    setState(() {});
+    // setState(() {});
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -71,24 +72,7 @@ class _OutletDataState extends ConsumerState<OutletTable> {
               onChanged: (text) => debugPrint(text),
               searchTextEditingController: controller,
               horizontalPadding: 5),
-          const LabelCard(),
-          // DataTable(
-          //   columns: const [
-          //     DataColumn(label: Text('Name')),
-          //     DataColumn(label: Text('Date Entered')),
-          //     DataColumn(label: Text('Last Visited')),
-          //   ],
-          //   rows: List.generate(
-          //     filteredOutlets.length,
-          //     (index) => DataRow(
-          //       cells: [
-          //         DataCell(Text(filteredOutlets[index].name ?? 'N/A')),
-          //         DataCell(Text(filteredOutlets[index].name ?? 'N/A')),
-          //         DataCell(Text(filteredOutlets[index].name ?? 'N/A')),
-          //       ],
-          //     ),
-          //   ),
-          // ),
+          const LabelCardOutlets(),
 
           const SizedBox(
             height: 30,
