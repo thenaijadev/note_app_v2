@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:flutter/material.dart';
 
-import 'package:netapp/app/presentation/widgets/input_field_widget.dart';
+import 'package:netapp/app/presentation/widgets/new/input_field_widget.dart';
 import 'package:netapp/app/presentation/widgets/title_text.dart';
 import 'package:netapp/utilities/constants.dart/app_colors.dart';
 import 'package:netapp/utilities/router/routes.dart';
