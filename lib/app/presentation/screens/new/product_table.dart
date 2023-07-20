@@ -83,7 +83,7 @@ class _ProductsTableState extends ConsumerState<ProductsTable> {
             },
           ),
           const SizedBox(
-            height: 30,
+            height: 00,
           ),
           // filteredProducts.isEmpty
           //     ? const Center(
@@ -149,7 +149,7 @@ class MobileDataTableProducts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
       child: Column(
         children: [
           Container(

@@ -33,8 +33,10 @@ class _OutletDataState extends ConsumerState<CompetitionReviewTable> {
     final reviews = ref.watch(reviewProvider.notifier);
     Future.delayed(const Duration(seconds: 1), () {
       reviews.getReviews();
-      setState(() {});
+      // setState(() {});
+      print(reviews.reviews);
     });
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -54,7 +56,7 @@ class _OutletDataState extends ConsumerState<CompetitionReviewTable> {
                       outletList: reviews.reviews,
                       index: index,
                       image: ImageHelper.decodeImage(
-                          reviews.reviews[index].image!),
+                          reviews.reviews[index].image ?? ""),
                     );
                   }))
         ]),
@@ -127,13 +129,16 @@ class MobileDataTable extends StatelessWidget {
           DataRowWidget(label: "Date entered", value: outletList[index].date),
           const HeaderUnderline(height: 1, color: AppColors.hintColor),
           DataRowWidget(
-              label: "Address", value: outletList[index].acticatedBrand),
+              label: "Activated brand",
+              value: outletList[index].acticatedBrand),
           const HeaderUnderline(height: 1, color: AppColors.hintColor),
           DataRowWidget(
-              label: "State", value: outletList[index].whatActication),
+              label: "What activation",
+              value: outletList[index].whatActication),
           const HeaderUnderline(height: 1, color: AppColors.hintColor),
           DataRowWidget(
-              label: "City", value: outletList[index].additionalInformtion),
+              label: "Additional information",
+              value: outletList[index].additionalInformtion),
           const HeaderUnderline(height: 1, color: AppColors.hintColor),
         ],
       ),

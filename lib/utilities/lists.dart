@@ -15,6 +15,11 @@ List<DropDownValueModel> yesOrNo = [
   const DropDownValueModel(name: 'No', value: false),
 ];
 
+List<DropDownValueModel> availability = [
+  const DropDownValueModel(name: 'In stock', value: "In Stock"),
+  const DropDownValueModel(name: 'Out of stock', value: 'Out of stock'),
+];
+
 final List<String> nigerianStates = [
   'Abia',
   'Adamawa',

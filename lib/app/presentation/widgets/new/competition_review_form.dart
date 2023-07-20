@@ -21,17 +21,26 @@ class _CompetitionReviewFormState extends ConsumerState<CompetitionReviewForm> {
   final formfieldkey_1 = GlobalKey<FormFieldState>();
   final formfieldkey_2 = GlobalKey<FormFieldState>();
   final formfieldkey_3 = GlobalKey<FormFieldState>();
+  final formKey = GlobalKey<FormState>();
+
   String? imageAsString;
   Image? image;
   Future<void> createReview() async {
     final review = ref.watch(reviewProvider.notifier);
 
+    if (formfieldkey_1.currentState?.value == null ||
+        formfieldkey_2.currentState?.value == null ||
+        formfieldkey_3.currentState?.value == null ||
+        imageAsString == null) {
+      return;
+    }
     review.createReview(
         date: DateFormat.yMMMMd().format(DateTime.now()),
         activatedBrand: formfieldkey_1.currentState?.value,
         additionalInformation: formfieldkey_3.currentState?.value,
         image: imageAsString,
         brandActivation: formfieldkey_3.currentState?.value);
+    Navigator.pushNamed(context, Routes.reviews);
   }
 
   @override
@@ -106,7 +115,6 @@ class _CompetitionReviewFormState extends ConsumerState<CompetitionReviewForm> {
                   ),
                   onPressed: () async {
                     await createReview();
-                    Navigator.pushNamed(context, Routes.reviews);
                   },
                   child: const TextWidget(
                     text: "Next",

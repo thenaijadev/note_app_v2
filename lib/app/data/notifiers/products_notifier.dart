@@ -36,27 +36,26 @@ class ProductNotifier extends StateNotifier<List<Product>> {
       required sku,
       required channel,
       required category,
-      required isAvailable,
-      required isOutOfStock,
       required isNewListing,
+      required availability,
       required price,
       required hasPriceChanged,
       required newPrice,
       image}) async {
     _product = Product(
-        price: price,
-        outletId: outletId,
-        id: uuid.v4(),
-        dateEntered: DateFormat.yMMMMd().format(DateTime.now()),
-        newPrice: newPrice,
-        brand: brand!,
-        isOutOfStock: isOutOfStock!,
-        isNewListing: isNewListing,
-        hasPriceChanged: hasPriceChanged!,
-        sku: sku,
-        category: category,
-        channel: channel,
-        isAvailable: isAvailable);
+      price: price,
+      availability: availability,
+      outletId: outletId,
+      id: uuid.v4(),
+      dateEntered: DateFormat.yMMMMd().format(DateTime.now()),
+      newPrice: newPrice,
+      brand: brand!,
+      isNewListing: isNewListing,
+      hasPriceChanged: hasPriceChanged!,
+      sku: sku,
+      category: category,
+      channel: channel,
+    );
     productBox.add(_product?.toMap());
 
     List<Product> theProducts = await getProducts();

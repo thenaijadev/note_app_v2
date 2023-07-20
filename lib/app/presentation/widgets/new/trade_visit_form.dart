@@ -36,7 +36,7 @@ class _TradeVisitFormState extends ConsumerState<TradeVisitForm> {
   double? price;
   double? newPrice;
 
-  bool? isBrandAvailable;
+  String? isAvailable;
   bool? isOutOfStock;
   bool? isNew;
   bool? hasPriceChanged;
@@ -128,16 +128,11 @@ class _TradeVisitFormState extends ConsumerState<TradeVisitForm> {
               ),
               DropDownInput(
                   onChanged: (val) {
-                    isBrandAvailable = val.value;
+                    isAvailable = val.value;
                   },
                   label: "Is this brand available?",
-                  options: yesOrNo),
-              DropDownInput(
-                  onChanged: (val) {
-                    isOutOfStock = val.value;
-                  },
-                  label: "Is it out of stock?",
-                  options: yesOrNo),
+                  options: availability),
+
               DropDownInput(
                   onChanged: (val) {
                     isNew = val.value;
@@ -198,13 +193,12 @@ class _TradeVisitFormState extends ConsumerState<TradeVisitForm> {
                                 newPrice: double.parse(
                                     formfieldkey_2.currentState?.value),
                                 brand: brand!,
-                                isOutOfStock: isOutOfStock!,
                                 isNewListing: isNew!,
                                 hasPriceChanged: hasPriceChanged!,
                                 sku: sku,
                                 category: getCategory(sku),
                                 channel: getChannel(sku),
-                                isAvailable: isBrandAvailable!);
+                                availability: isAvailable);
                           },
                           child: const TextWidget(
                             text: "Next",
