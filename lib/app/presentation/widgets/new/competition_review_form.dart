@@ -125,6 +125,37 @@ class _CompetitionReviewFormState extends ConsumerState<CompetitionReviewForm> {
               ),
             ),
           ),
+        ),
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 10.0, top: 10),
+            child: Container(
+              width: 272,
+              height: 50,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                border: Border.all(color: AppColors.inputBorder),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  style: const ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(
+                      Color.fromARGB(255, 0, 44, 139),
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, Routes.reviews);
+                  },
+                  child: const TextWidget(
+                    text: "View reviews",
+                    color: AppColors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ),
         )
       ],
     ));

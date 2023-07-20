@@ -9,6 +9,7 @@ class Routes {
   static const String productsTable = "/productsTable";
   static const String reviews = "/reviews";
   static const String reviewForm = "/reviewForm";
+  static const String outletDetails = "/outletDetails";
 
   static const String skuForm = "/skuForm";
 }

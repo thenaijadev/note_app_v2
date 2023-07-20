@@ -104,10 +104,13 @@ class _ProductsTableState extends ConsumerState<ProductsTable> {
           //             })),
 
           products.isEmpty
-              ? const Center(
-                  child: TextWidget(
-                    text: "No Products to show",
-                    fontWeight: FontWeight.bold,
+              ? const Padding(
+                  padding: EdgeInsets.all(40.0),
+                  child: Center(
+                    child: TextWidget(
+                      text: "No Products to show",
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 )
               : SizedBox(

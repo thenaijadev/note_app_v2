@@ -64,7 +64,7 @@ class _OutletDataState extends ConsumerState<CompetitionReviewTable> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color.fromARGB(255, 0, 44, 139),
         onPressed: () {
-          Navigator.pushReplacementNamed(context, Routes.dataCapture);
+          Navigator.pushReplacementNamed(context, Routes.reviewForm);
         },
         child: const Icon(
           Icons.add,
@@ -84,11 +84,11 @@ class MobileDataTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
       child: Column(
         children: [
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             decoration: BoxDecoration(
               color: const Color.fromARGB(255, 0, 44, 139),
               borderRadius: BorderRadius.circular(5),
@@ -96,13 +96,8 @@ class MobileDataTable extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const TextWidget(
-                  text: "Name:",
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
                 TextWidget(
-                  text: outletList[index].acticatedBrand!,
+                  text: outletList[index].date!,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
@@ -126,8 +121,6 @@ class MobileDataTable extends StatelessWidget {
               ],
             ),
           ),
-          DataRowWidget(label: "Date entered", value: outletList[index].date),
-          const HeaderUnderline(height: 1, color: AppColors.hintColor),
           DataRowWidget(
               label: "Activated brand",
               value: outletList[index].acticatedBrand),

@@ -98,6 +98,37 @@ class _MobileDataTableState extends State<MobileDataTable> {
                       ),
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10.0),
+                    child: Container(
+                      width: 272,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: AppColors.inputBorder),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton(
+                          style: const ButtonStyle(
+                            backgroundColor: MaterialStatePropertyAll(
+                              Color.fromARGB(255, 0, 44, 139),
+                            ),
+                          ),
+                          onPressed: () async {
+                            Navigator.pushNamed(context, Routes.outletDetails,
+                                arguments: widget.outletList?[widget.index]);
+                            // Navigator.pushNamed(context, Routes.outlets);
+                          },
+                          child: const TextWidget(
+                            text: "View Details",
+                            color: AppColors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             );

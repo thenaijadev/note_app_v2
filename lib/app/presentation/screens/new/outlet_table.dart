@@ -68,12 +68,11 @@ class _OutletDataState extends ConsumerState<OutletTable> {
         child: ListView(children: [
           AnimationSearchBar(
               backIconColor: Colors.black,
-              centerTitle: 'Outlets',
+              centerTitle: '',
               onChanged: (text) => debugPrint(text),
               searchTextEditingController: controller,
               horizontalPadding: 5),
           const LabelCardOutlets(),
-
           const SizedBox(
             height: 30,
           ),
@@ -95,7 +94,6 @@ class _OutletDataState extends ConsumerState<OutletTable> {
               ),
             ],
           ),
-
           outlet.outlets.isEmpty
               ? const Center(
                   child: TextWidget(
@@ -146,72 +144,6 @@ class _OutletDataState extends ConsumerState<OutletTable> {
                                 fontWeight: FontWeight.bold,
                               ),
                             )
-
-          // filteredOutlets.isEmpty
-          //     ? const Center(
-          //         child: TextWidget(
-          //           text: "No outlets captured",
-          //           fontWeight: FontWeight.bold,
-          //         ),
-          //       )
-          //     : ListView.builder(
-          //         itemCount:
-          //             showAll ? outlet.outlets.length : filteredOutlets.length,
-          //         itemBuilder: (BuildContext context, index) {
-          //           return MobileDataTable(
-          //             outletList: showAll ? outlet.outlets : filteredOutlets,
-          //             index: index,
-          //           );
-          //         },
-          //       ),
-          // filteredOutlets.isEmpty
-          //     ? outlet.outlets.isEmpty
-          //         ? const SizedBox(
-          //             // height: MediaQuery.of(context).size.height * 0.8,
-          //             //   child: ListView.builder(
-          //             //     itemCount: outlet.outlets.length,
-          //             //     itemBuilder: (BuildContext context, index) {
-          //             //       return MobileDataTable(
-          //             //         outletList: outlet.outlets,
-          //             //         index: index,
-          //             //       );
-          //             //     },
-          //             //   ),
-          //             // )
-          //             child: Center(
-          //             child: TextWidget(
-          //               text: "No outlets captured",
-          //               fontWeight: FontWeight.bold,
-          //             ),
-          //           ))
-          //         : SizedBox(
-          //             height: MediaQuery.of(context).size.height * 0.8,
-          //             child: ListView.builder(
-          //               itemCount: filteredOutlets.length,
-          //               itemBuilder: (BuildContext context, index) {
-          //                 return MobileDataTable(
-          //                   outletList: filteredOutlets,
-          //                   index: index,
-          //                 );
-          //               },
-          //             ),
-          //           )
-          //     : SizedBox(
-          //         height: MediaQuery.of(context).size.height * 0.8,
-          //         child: ListView.builder(
-          //           itemCount: filteredOutlets.isEmpty
-          //               ? outlet.outlets.length
-          //               : filteredOutlets.length,
-          //           itemBuilder: (BuildContext context, index) {
-          //             return MobileDataTable(
-          //               outletList: filteredOutlets.isEmpty
-          //                   ? outlet.outlets
-          //                   : filteredOutlets,
-          //               index: index,
-          //             );
-          //           },
-          //         ),
-          //       )
         ]),
       ),
       floatingActionButton: FloatingActionButton(
