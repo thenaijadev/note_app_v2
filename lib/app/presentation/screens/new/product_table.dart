@@ -1,4 +1,3 @@
-import 'package:animation_search_bar/animation_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -70,12 +69,12 @@ class _ProductsTableState extends ConsumerState<ProductsTable> {
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: ListView(children: [
-          AnimationSearchBar(
-              backIconColor: Colors.black,
-              centerTitle: '',
-              onChanged: (text) => debugPrint(text),
-              searchTextEditingController: controller,
-              horizontalPadding: 5),
+          // AnimationSearchBar(
+          //     backIconColor: Colors.black,
+          //     centerTitle: '',
+          //     onChanged: (text) => debugPrint(text),
+          //     searchTextEditingController: controller,
+          //     horizontalPadding: 5),
           LabelCardProduct(
             onTap: () {
               Navigator.pushReplacementNamed(context, Routes.skuForm,

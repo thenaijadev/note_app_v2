@@ -49,6 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       const SizedBox(height: 50),
                       InputFieldWidget(
+                        isMandatory: true,
                         label: "Email Address",
                         hintText: "example@gmail.com",
                         onChanged: (value) {
@@ -65,6 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: 30,
                       ),
                       InputFieldWidget(
+                        isMandatory: true,
                         label: "Password",
                         hintText: "•••••••••",
                         onChanged: (value) {

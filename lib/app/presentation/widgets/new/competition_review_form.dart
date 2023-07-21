@@ -50,16 +50,19 @@ class _CompetitionReviewFormState extends ConsumerState<CompetitionReviewForm> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         InputFieldWidget(
+            isMandatory: true,
             label: "What brand is activated?",
             hintText: "",
             onChanged: (val) {},
             textFieldkey: formfieldkey_1),
         InputFieldWidget(
+            isMandatory: true,
             label: "What activation?",
             hintText: "",
             onChanged: (val) {},
             textFieldkey: formfieldkey_2),
         InputFieldWidget(
+            isMandatory: true,
             label: "Any additional information?",
             hintText: "",
             onChanged: (val) {},

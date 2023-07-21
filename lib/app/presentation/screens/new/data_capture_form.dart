@@ -9,7 +9,6 @@ import 'package:netapp/app/presentation/widgets/title_text.dart';
 import 'package:netapp/app/providers/state_providers.dart';
 import 'package:netapp/utilities/constants.dart/app_colors.dart';
 import 'package:netapp/utilities/geolocator.dart';
-import 'package:stop_watch_timer/stop_watch_timer.dart';
 
 class DataCatureScreen extends ConsumerStatefulWidget {
   const DataCatureScreen({super.key});
@@ -20,12 +19,10 @@ class DataCatureScreen extends ConsumerStatefulWidget {
 
 class _DataCatureScreenState extends ConsumerState<DataCatureScreen>
     with SingleTickerProviderStateMixin {
-  final StopWatchTimer _stopWatchTimer = StopWatchTimer();
   Position? position;
   late TabController controller;
   @override
   void initState() {
-    _stopWatchTimer.onStartTimer();
     controller = TabController(length: 1, vsync: this);
 
     ref.read(stopwatchProvider.notifier).start();
@@ -35,13 +32,6 @@ class _DataCatureScreenState extends ConsumerState<DataCatureScreen>
     });
 
     super.initState();
-  }
-
-  @override
-  void dispose() async {
-    _stopWatchTimer.dispose(); // Need to call dispose function.
-
-    super.dispose();
   }
 
   getLocation() async {
@@ -54,7 +44,7 @@ class _DataCatureScreenState extends ConsumerState<DataCatureScreen>
     var now = DateTime.now();
 
     String date = DateFormat.yMMMMd().format(now);
-    String displayTime;
+
     final stopwatchDuration = ref.watch(stopwatchProvider);
     return Scaffold(
       backgroundColor: Colors.white,

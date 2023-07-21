@@ -65,17 +65,39 @@ class _OutletDetailsFormState extends ConsumerState<OutletDetailsForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const Padding(
+            padding: EdgeInsets.only(left: 15.0, top: 10),
+            child: Row(
+              children: [
+                TextWidget(
+                  text: "'*'",
+                  color: Colors.red,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                TextWidget(
+                  text: "Mandatory fields",
+                  fontSize: 12,
+                  color: Color.fromARGB(255, 107, 106, 106),
+                ),
+              ],
+            ),
+          ),
           InputFieldWidget(
+              isMandatory: true,
               label: "Outlet name",
               hintText: "",
               onChanged: (val) {},
               textFieldkey: formfieldkey_1),
           InputFieldWidget(
+              isMandatory: true,
               label: "Address",
               hintText: "",
               onChanged: (val) {},
               textFieldkey: formfieldkey_2),
           DropDownInput(
+            isMandatory: true,
             onChanged: (val) {
               state = val.name;
               setState(() {});
@@ -106,6 +128,7 @@ class _OutletDetailsFormState extends ConsumerState<OutletDetailsForm> {
             ),
           ),
           DropDownInput(
+            isMandatory: true,
             onChanged: (val) {
               city = val.name;
             },
@@ -114,12 +137,14 @@ class _OutletDetailsFormState extends ConsumerState<OutletDetailsForm> {
             options: cities(),
           ),
           DropDownInput(
+              isMandatory: true,
               onChanged: (val) {
                 channel = val.name;
               },
               label: "Channel",
               options: channels),
           DropDownInput(
+            isMandatory: true,
             onChanged: (val) {
               subChannel = val.name;
             },
@@ -128,16 +153,19 @@ class _OutletDetailsFormState extends ConsumerState<OutletDetailsForm> {
             options: subChannels(),
           ),
           InputFieldWidget(
+              isMandatory: false,
               label: "Name of Manager",
               hintText: "",
               onChanged: (val) {},
               textFieldkey: formfieldkey_3),
           InputFieldWidget(
+              isMandatory: false,
               label: "Phone Number of Manager",
               hintText: "",
               onChanged: (val) {},
               textFieldkey: formfieldkey_4),
           InputFieldWidget(
+              isMandatory: false,
               label: "Supplier(s)",
               hintText: "",
               onChanged: (val) {},

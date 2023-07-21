@@ -1,38 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:netapp/app/presentation/screens/new/today_details.dart';
 import 'package:netapp/app/presentation/widgets/new/header_underline.dart';
 import 'package:netapp/app/presentation/widgets/new/trade_visit_form.dart';
 import 'package:netapp/app/presentation/widgets/title_text.dart';
+import 'package:netapp/app/providers/state_providers.dart';
 import 'package:netapp/utilities/constants.dart/app_colors.dart';
 import 'package:netapp/utilities/geolocator.dart';
-import 'package:stop_watch_timer/stop_watch_timer.dart';
 
-class SkuScreen extends StatefulWidget {
+class SkuScreen extends ConsumerStatefulWidget {
   const SkuScreen({super.key, required this.id});
   final String id;
   @override
-  State<SkuScreen> createState() => _SkuScreenState();
+  ConsumerState<SkuScreen> createState() => _SkuScreenState();
 }
 
-class _SkuScreenState extends State<SkuScreen>
+class _SkuScreenState extends ConsumerState<SkuScreen>
     with SingleTickerProviderStateMixin {
-  final StopWatchTimer _stopWatchTimer = StopWatchTimer();
   Position? position;
   late TabController controller;
   @override
   void initState() {
-    _stopWatchTimer.onStartTimer();
     controller = TabController(length: 1, vsync: this);
+    ref.read(stopwatchProvider.notifier).start();
     getLocation();
     super.initState();
-  }
-
-  @override
-  void dispose() async {
-    super.dispose();
-    await _stopWatchTimer.dispose(); // Need to call dispose function.
   }
 
   getLocation() async {
@@ -43,9 +37,9 @@ class _SkuScreenState extends State<SkuScreen>
   @override
   Widget build(BuildContext context) {
     var now = DateTime.now();
+    final stopwatchDuration = ref.watch(stopwatchProvider);
 
     String date = DateFormat.yMMMMd().format(now);
-    String displayTime;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -85,18 +79,10 @@ class _SkuScreenState extends State<SkuScreen>
                       child: Column(
                         children: [
                           const HorizontalDivider(width: 500),
-                          StreamBuilder<int>(
-                              stream: _stopWatchTimer.rawTime,
-                              builder: (context, snap) {
-                                final value = snap.data;
-                                displayTime = StopWatchTimer.getDisplayTime(
-                                    value ?? 0,
-                                    milliSecond: false);
-                                return DataRowWidget(
-                                  label: "Total time spent:",
-                                  value: displayTime,
-                                );
-                              }),
+                          DataRowWidget(
+                            label: "Total time spent:",
+                            value: formatDuration(stopwatchDuration),
+                          ),
                           const HorizontalDivider(width: 500),
                           const DataRowWidget(
                             label: "Outlet captured by",
@@ -161,4 +147,12 @@ class _SkuScreenState extends State<SkuScreen>
       ),
     );
   }
+}
+
+String formatDuration(Duration duration) {
+  final hours = duration.inHours.toString().padLeft(2, '0');
+  final minutes = duration.inMinutes.remainder(60).toString().padLeft(2, '0');
+  final seconds = duration.inSeconds.remainder(60).toString().padLeft(2, '0');
+
+  return '$hours:$minutes:$seconds';
 }

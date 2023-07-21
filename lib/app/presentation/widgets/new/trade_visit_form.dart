@@ -66,6 +66,25 @@ class _TradeVisitFormState extends ConsumerState<TradeVisitForm> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            const Padding(
+              padding: EdgeInsets.only(left: 15.0, top: 10),
+              child: Row(
+                children: [
+                  TextWidget(
+                    text: "'*'",
+                    color: Colors.red,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  TextWidget(
+                    text: "Mandatory fields",
+                    fontSize: 12,
+                    color: Color.fromARGB(255, 107, 106, 106),
+                  ),
+                ],
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(mainAxisSize: MainAxisSize.min, children: [
@@ -81,6 +100,7 @@ class _TradeVisitFormState extends ConsumerState<TradeVisitForm> {
                 const HorizontalDivider(width: 500),
 
                 DropDownInput(
+                    isMandatory: true,
                     onChanged: (val) {
                       setState(() {
                         category = val.name.toString();
@@ -103,6 +123,7 @@ class _TradeVisitFormState extends ConsumerState<TradeVisitForm> {
                 //             ? theSpirits()
                 //             : thefoods()),
                 DropDownInput(
+                    isMandatory: true,
                     onChanged: (val) {
                       setState(() {
                         brand = val.name.toString();
@@ -116,6 +137,7 @@ class _TradeVisitFormState extends ConsumerState<TradeVisitForm> {
                             ? theSpiritBrandList()
                             : theFoodBrandList()),
                 DropDownInput(
+                    isMandatory: true,
                     onChanged: (val) {
                       setState(() {
                         sku = val.name.toString();
@@ -133,6 +155,8 @@ class _TradeVisitFormState extends ConsumerState<TradeVisitForm> {
                   label: "Is this brand available?",
                   groupValueYes: _isAvailable,
                   groupValueNo: _isNoSelected3,
+                  radioLabel1: "In stock",
+                  radioLabel2: "Out of stock",
                   onChangedYes: (value) {
                     setState(() {
                       _isAvailable = value ?? false;
@@ -166,6 +190,7 @@ class _TradeVisitFormState extends ConsumerState<TradeVisitForm> {
                 ),
 
                 InputFieldWidget(
+                    isMandatory: true,
                     label: "What is it's price?",
                     hintText: "",
                     onChanged: (val) {},
@@ -191,6 +216,7 @@ class _TradeVisitFormState extends ConsumerState<TradeVisitForm> {
 
                 _isPriceChanged
                     ? InputFieldWidget(
+                        isMandatory: true,
                         label: "What is it's new price?",
                         hintText: "",
                         onChanged: (val) {},
@@ -231,8 +257,10 @@ class _TradeVisitFormState extends ConsumerState<TradeVisitForm> {
                                   outletId: widget.id,
                                   price: double.parse(
                                       formfieldkey_1.currentState?.value),
-                                  newPrice: double.parse(
-                                      formfieldkey_2.currentState?.value),
+                                  newPrice: _isPriceChanged
+                                      ? double.parse(
+                                          formfieldkey_2.currentState?.value)
+                                      : null,
                                   brand: brand,
                                   isNewListing: _isNewListing,
                                   hasPriceChanged: _isPriceChanged,

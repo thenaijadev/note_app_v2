@@ -14,7 +14,8 @@ class InputFieldWidget extends StatelessWidget {
       required this.textFieldkey,
       this.obscureText = false,
       this.suffixIcon,
-      this.prefixicon});
+      this.prefixicon,
+      required this.isMandatory});
   final String label;
   final String hintText;
   final double hintSize;
@@ -25,6 +26,7 @@ class InputFieldWidget extends StatelessWidget {
   final Widget? suffixIcon;
   final Widget? prefixicon;
   final String? initialValue;
+  final bool isMandatory;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -34,10 +36,21 @@ class InputFieldWidget extends StatelessWidget {
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Padding(
             padding: const EdgeInsets.only(bottom: 10),
-            child: TextWidget(
-              text: label,
-              color: const Color.fromARGB(255, 110, 111, 117),
-              fontSize: 15,
+            child: Row(
+              children: [
+                TextWidget(
+                  text: label,
+                  color: const Color.fromARGB(255, 110, 111, 117),
+                  fontSize: 15,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: TextWidget(
+                    text: isMandatory ? "*" : "",
+                    color: Colors.red,
+                  ),
+                )
+              ],
             ),
           ),
           TextFormField(

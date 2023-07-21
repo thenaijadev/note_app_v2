@@ -31,10 +31,21 @@ class _YesNoRadioButtonsState extends State<YesNoRadioButtons> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextWidget(
-            text: widget.label,
-            fontSize: 15,
-            color: const Color.fromARGB(255, 110, 111, 117),
+          Row(
+            children: [
+              TextWidget(
+                text: widget.label,
+                fontSize: 15,
+                color: const Color.fromARGB(255, 110, 111, 117),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(left: 8.0),
+                child: TextWidget(
+                  text: "*",
+                  color: Colors.red,
+                ),
+              )
+            ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
