@@ -7,6 +7,7 @@ import 'package:netapp/app/presentation/widgets/title_text.dart';
 import 'package:netapp/app/providers/state_providers.dart';
 import 'package:netapp/utilities/constants.dart/app_colors.dart';
 import 'package:netapp/utilities/lists.dart';
+import 'package:netapp/utilities/logger.dart';
 import 'package:netapp/utilities/router/routes.dart';
 
 class OutletDetailsForm extends ConsumerStatefulWidget {
@@ -45,11 +46,14 @@ class _OutletDetailsFormState extends ConsumerState<OutletDetailsForm> {
         address: formfieldkey_2.currentState?.value,
         stateCity: state!,
         city: city!,
-        region: region!,
+        region: getRegion(state),
         channel: channel!,
         subChannel: subChannel!);
 
-    Navigator.pushNamed(context, Routes.outlets);
+    Navigator.pushNamed(context, Routes.skuForm,
+        arguments: outlet.outlets.last.id);
+
+    logger.e(outlet.outlets.last.id);
 
     // widget.controller.animateTo(1,
     //     duration: const Duration(seconds: 1), curve: Curves.bounceIn);
@@ -59,6 +63,7 @@ class _OutletDetailsFormState extends ConsumerState<OutletDetailsForm> {
   Widget build(BuildContext context) {
     return Form(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           InputFieldWidget(
               label: "Outlet name",
@@ -73,10 +78,32 @@ class _OutletDetailsFormState extends ConsumerState<OutletDetailsForm> {
           DropDownInput(
             onChanged: (val) {
               state = val.name;
+              setState(() {});
             },
             label: "State",
             options: states(),
             enableSearch: true,
+          ),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 4, top: 15, left: 22),
+            child: TextWidget(
+              text: "Region:",
+              fontSize: 15,
+              color: Color.fromARGB(255, 110, 111, 117),
+            ),
+          ),
+          Center(
+            child: Container(
+              height: 45,
+              width: 315,
+              decoration: BoxDecoration(
+                border: Border.all(color: AppColors.inputBorder),
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Padding(
+                  padding: const EdgeInsets.only(left: 20.0, top: 12),
+                  child: TextWidget(text: getRegion(state))),
+            ),
           ),
           DropDownInput(
             onChanged: (val) {
@@ -85,14 +112,6 @@ class _OutletDetailsFormState extends ConsumerState<OutletDetailsForm> {
             label: "City",
             enableSearch: true,
             options: cities(),
-          ),
-          DropDownInput(
-            onChanged: (val) {
-              region = val.name;
-            },
-            label: "Region",
-            enableSearch: true,
-            options: regions(),
           ),
           DropDownInput(
               onChanged: (val) {
@@ -126,31 +145,33 @@ class _OutletDetailsFormState extends ConsumerState<OutletDetailsForm> {
           const SizedBox(
             height: 20,
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10.0),
-            child: Container(
-              width: 272,
-              height: 50,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                border: Border.all(color: AppColors.inputBorder),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                  style: const ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(
-                      Color.fromARGB(255, 0, 44, 139),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 10.0),
+              child: Container(
+                width: 272,
+                height: 50,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  border: Border.all(color: AppColors.inputBorder),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    style: const ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(
+                        Color.fromARGB(255, 0, 44, 139),
+                      ),
                     ),
-                  ),
-                  onPressed: () async {
-                    createOutlet();
-                    // Navigator.pushNamed(context, Routes.outlets);
-                  },
-                  child: const TextWidget(
-                    text: "Next",
-                    color: AppColors.white,
-                    fontWeight: FontWeight.bold,
+                    onPressed: () async {
+                      createOutlet();
+                      // Navigator.pushNamed(context, Routes.outlets);
+                    },
+                    child: const TextWidget(
+                      text: "Save",
+                      color: AppColors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),

@@ -5,6 +5,7 @@ import 'package:netapp/app/data/models/product.dart';
 import 'package:netapp/app/data/notifiers/outlet_notifier.dart';
 import 'package:netapp/app/data/notifiers/products_notifier.dart';
 import 'package:netapp/app/data/notifiers/review_notifier.dart';
+import 'package:netapp/app/data/notifiers/stop_watch_notifier.dart';
 
 final outletProvider = StateNotifierProvider<OutletNotifier, List<Outlet>>(
     (ref) => OutletNotifier());
@@ -15,3 +16,8 @@ final reviewProvider =
 
 final productsProvider = StateNotifierProvider<ProductNotifier, List<Product>>(
     (ref) => ProductNotifier());
+
+final stopwatchProvider =
+    StateNotifierProvider<StopwatchNotifier, Duration>((ref) {
+  return StopwatchNotifier();
+});

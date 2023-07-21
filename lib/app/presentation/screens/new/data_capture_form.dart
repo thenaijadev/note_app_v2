@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:netapp/app/presentation/screens/new/today_details.dart';
 import 'package:netapp/app/presentation/widgets/new/header_underline.dart';
 import 'package:netapp/app/presentation/widgets/new/outlet_details_form.dart';
 import 'package:netapp/app/presentation/widgets/title_text.dart';
+import 'package:netapp/app/providers/state_providers.dart';
 import 'package:netapp/utilities/constants.dart/app_colors.dart';
 import 'package:netapp/utilities/geolocator.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 
-class DataCatureScreen extends StatefulWidget {
+class DataCatureScreen extends ConsumerStatefulWidget {
   const DataCatureScreen({super.key});
 
   @override
-  State<DataCatureScreen> createState() => _DataCatureScreenState();
+  ConsumerState<DataCatureScreen> createState() => _DataCatureScreenState();
 }
 
-class _DataCatureScreenState extends State<DataCatureScreen>
+class _DataCatureScreenState extends ConsumerState<DataCatureScreen>
     with SingleTickerProviderStateMixin {
   final StopWatchTimer _stopWatchTimer = StopWatchTimer();
   Position? position;
@@ -25,7 +27,13 @@ class _DataCatureScreenState extends State<DataCatureScreen>
   void initState() {
     _stopWatchTimer.onStartTimer();
     controller = TabController(length: 1, vsync: this);
-    getLocation();
+
+    ref.read(stopwatchProvider.notifier).start();
+
+    setState(() {
+      getLocation();
+    });
+
     super.initState();
   }
 
@@ -38,7 +46,7 @@ class _DataCatureScreenState extends State<DataCatureScreen>
 
   getLocation() async {
     position = await GeoLocatorHelper.getUserLocation();
-    setState(() {});
+    // setState(() {});
   }
 
   @override
@@ -47,6 +55,7 @@ class _DataCatureScreenState extends State<DataCatureScreen>
 
     String date = DateFormat.yMMMMd().format(now);
     String displayTime;
+    final stopwatchDuration = ref.watch(stopwatchProvider);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -86,18 +95,11 @@ class _DataCatureScreenState extends State<DataCatureScreen>
                       child: Column(
                         children: [
                           const HorizontalDivider(width: 500),
-                          StreamBuilder<int>(
-                              stream: _stopWatchTimer.rawTime,
-                              builder: (context, snap) {
-                                final value = snap.data;
-                                displayTime = StopWatchTimer.getDisplayTime(
-                                    value ?? 0,
-                                    milliSecond: false);
-                                return DataRowWidget(
-                                  label: "Total time spent:",
-                                  value: displayTime,
-                                );
-                              }),
+
+                          DataRowWidget(
+                            label: "Total time spent:",
+                            value: formatDuration(stopwatchDuration),
+                          ),
                           const HorizontalDivider(width: 500),
                           const DataRowWidget(
                             label: "Outlet captured by",
@@ -108,13 +110,13 @@ class _DataCatureScreenState extends State<DataCatureScreen>
                             label: "Capture date",
                             value: date,
                           ),
-                          const HorizontalDivider(width: 500),
-                          DataRowWidget(
-                            label: "Gps Co-ordinates",
-                            value: position == null
-                                ? "Getting Co-ordinates..."
-                                : "${position?.latitude},${position?.longitude} ",
-                          ),
+                          // const HorizontalDivider(width: 500),
+                          // DataRowWidget(
+                          //   label: "Gps Co-ordinates",
+                          //   value: position == null
+                          //       ? "Getting Co-ordinates..."
+                          //       : "${position?.latitude},${position?.longitude} ",
+                          // ),
                           const HorizontalDivider(width: 500),
                           const SizedBox(
                             height: 20,
@@ -129,14 +131,6 @@ class _DataCatureScreenState extends State<DataCatureScreen>
                                   text: "Outlet details",
                                   fontSize: 14,
                                 ),
-                                // TextWidget(
-                                //   text: "Trade visit",
-                                //   fontSize: 14,
-                                // ),
-                                // TextWidget(
-                                //   text: "Competition Review",
-                                //   fontSize: 14,
-                                // ),
                               ]),
                           SizedBox(
                             height: 1200,
@@ -153,8 +147,6 @@ class _DataCatureScreenState extends State<DataCatureScreen>
                                     "longitude": position?.longitude
                                   },
                                 ),
-                                // const PageViewWidget(),
-                                // const CompetitionReviewForm()
                               ],
                             ),
                           ),
@@ -170,4 +162,12 @@ class _DataCatureScreenState extends State<DataCatureScreen>
       ),
     );
   }
+}
+
+String formatDuration(Duration duration) {
+  final hours = duration.inHours.toString().padLeft(2, '0');
+  final minutes = duration.inMinutes.remainder(60).toString().padLeft(2, '0');
+  final seconds = duration.inSeconds.remainder(60).toString().padLeft(2, '0');
+
+  return '$hours:$minutes:$seconds';
 }

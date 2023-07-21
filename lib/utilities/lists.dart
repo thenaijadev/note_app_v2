@@ -411,6 +411,44 @@ List<Map<String, dynamic>> productList = [
   }
 ];
 
+List<String> wineBrands = [
+  'Gerard Bertrand',
+  'Van Loveren',
+  'BPHR',
+  'Georges Duboeuf',
+  'Haussmann',
+  'Netter',
+  'Brotte',
+  'Moet Hennessy',
+];
+
+List<String> spiritBrands = [
+  'Proximo',
+  'Les Bienheureux',
+  'Moet Hennessy',
+];
+List<String> foodBrands = [
+  'Nutresa',
+];
+
+List<DropDownValueModel> theWineBrandList() {
+  final wineBrand =
+      wineBrands.map((e) => DropDownValueModel(name: e, value: e));
+  return wineBrand.toList();
+}
+
+List<DropDownValueModel> theSpiritBrandList() {
+  final spiritBrand =
+      spiritBrands.map((e) => DropDownValueModel(name: e, value: e));
+  return spiritBrand.toList();
+}
+
+List<DropDownValueModel> theFoodBrandList() {
+  final foodBrand =
+      foodBrands.map((e) => DropDownValueModel(name: e, value: e));
+  return foodBrand.toList();
+}
+
 List<String> brandsList = [
   'Gerard Bertrand',
   'Van Loveren',
@@ -461,6 +499,13 @@ List<String> sku = [
   'Veuve Clicquot',
 ];
 
+List<String> categories = ["Wines", "Spirits", "Foods"];
+
+List<DropDownValueModel> theCategories() {
+  final category = categories.map((e) => DropDownValueModel(name: e, value: e));
+  return category.toList();
+}
+
 List<DropDownValueModel> skus() {
   final skus = sku.map((e) => DropDownValueModel(name: e, value: e));
   return skus.toList();
@@ -498,6 +543,11 @@ List<String> wines = [
   'Veuve Clicquot',
 ];
 
+List<DropDownValueModel> theWines() {
+  final wine = wines.map((e) => DropDownValueModel(name: e, value: e));
+  return wine.toList();
+}
+
 List<String> spirits = [
   'Bushmills',
   'Embargo',
@@ -507,7 +557,17 @@ List<String> spirits = [
   'Hennessy XO',
 ];
 
+List<DropDownValueModel> theSpirits() {
+  final spirit = spirits.map((e) => DropDownValueModel(name: e, value: e));
+  return spirit.toList();
+}
+
 List<String> foods = ["Super 2"];
+
+List<DropDownValueModel> thefoods() {
+  final food = foods.map((e) => DropDownValueModel(name: e, value: e));
+  return food.toList();
+}
 
 getCategory(String product) {
   if (wines.contains(product)) {
@@ -526,6 +586,85 @@ getChannel(String product) {
     return "Off-trade";
   } else if (product != "Super 2") {
     return "On-trade & off-trade";
+  } else {
+    return "";
+  }
+}
+
+List<String> northWest = [
+  'Kano',
+  'Katsina',
+  'Jigawa',
+  'Kaduna',
+  'Sokoto',
+  'Kebbi',
+  'Zamfara',
+];
+
+// List of states in North-East
+List<String> northEast = [
+  'Borno',
+  'Bauchi',
+  'Adamawa',
+  'Gombe',
+  'Yobe',
+  'Taraba',
+];
+
+// List of states in North-Central
+List<String> northCentral = [
+  'Benue',
+  'Kogi',
+  'Kwara',
+  'Nassarawa',
+  'Niger',
+  'Plateau',
+  'FCT (Abuja)',
+];
+
+// List of states in South-West
+List<String> southWest = [
+  'Lagos',
+  'Ogun',
+  'Oyo',
+  'Osun',
+  'Ondo',
+  'Ekiti',
+];
+
+// List of states in South-East
+List<String> southEast = [
+  'Abia',
+  'Anambra',
+  'Ebonyi',
+  'Enugu',
+  'Imo',
+];
+
+// List of states in South-South
+List<String> southSouth = [
+  'Akwa Ibom',
+  'Cross River',
+  'Rivers',
+  'Bayelsa',
+  'Edo',
+  'Delta',
+];
+
+String getRegion(String? state) {
+  print(state);
+  if (northEast.contains(state)) {
+    return "North East";
+  } else if (northWest.contains(state)) {
+    return "North West";
+  } else if (southEast.contains(state)) {
+    return "South East";
+  } else if (southSouth.contains(state)) {
+    return "South South";
+  } else if (southWest.contains(state)) {
+    return "South West";
+  } else if (northCentral.contains(state)) {
+    return "North Central";
   } else {
     return "";
   }

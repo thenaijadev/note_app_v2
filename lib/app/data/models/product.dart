@@ -3,14 +3,14 @@ import 'dart:convert';
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class Product {
   Product(
-      {required this.channel,
+      {this.channel,
       required this.availability,
       required this.id,
       required this.outletId,
       required this.brand,
       required this.dateEntered,
       required this.sku,
-      required this.category,
+      this.category,
       required this.isNewListing,
       required this.price,
       required this.hasPriceChanged,
@@ -20,10 +20,10 @@ class Product {
   final String sku;
   final String outletId;
   final String dateEntered;
-  final String category;
+  final String? category;
   final String id;
   final String availability;
-  final String channel;
+  final String? channel;
   final bool isNewListing;
   final double price;
   final bool hasPriceChanged;

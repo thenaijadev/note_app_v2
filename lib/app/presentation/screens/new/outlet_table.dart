@@ -1,4 +1,3 @@
-import 'package:animation_search_bar/animation_search_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -66,12 +65,12 @@ class _OutletDataState extends ConsumerState<OutletTable> {
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: ListView(children: [
-          AnimationSearchBar(
-              backIconColor: Colors.black,
-              centerTitle: '',
-              onChanged: (text) => debugPrint(text),
-              searchTextEditingController: controller,
-              horizontalPadding: 5),
+          // AnimationSearchBar(
+          // backIconColor: Colors.black,
+          // centerTitle: '',
+          // onChanged: (text) => debugPrint(text),
+          // searchTextEditingController: controller,
+          // horizontalPadding: 5),
           const LabelCardOutlets(),
           const SizedBox(
             height: 30,
@@ -108,7 +107,7 @@ class _OutletDataState extends ConsumerState<OutletTable> {
                         itemCount: outlet.outlets.length,
                         itemBuilder: (BuildContext context, index) {
                           return MobileDataTable(
-                            outletList: outlet.outlets,
+                            outletList: outlet.outlets.reversed.toList(),
                             index: index,
                           );
                         },
@@ -131,8 +130,8 @@ class _OutletDataState extends ConsumerState<OutletTable> {
                                 itemBuilder: (BuildContext context, index) {
                                   return MobileDataTable(
                                     outletList: filteredOutlets.isEmpty
-                                        ? outlet.outlets
-                                        : filteredOutlets,
+                                        ? outlet.outlets.reversed.toList()
+                                        : filteredOutlets.reversed.toList(),
                                     index: index,
                                   );
                                 },
@@ -191,7 +190,7 @@ class _OutletDataState extends ConsumerState<OutletTable> {
                                   setState(() {
                                     showAll = false;
                                   });
-                                  print(filteredOutlets);
+
                                   Navigator.of(context).pop();
                                 },
                                 child: const TextWidget(

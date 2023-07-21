@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:netapp/app/presentation/screens/new/today_details.dart';
 import 'package:netapp/app/presentation/widgets/new/edit_bottom_sheet_widget.dart';
 import 'package:netapp/app/presentation/widgets/new/input_field_widget.dart';
+import 'package:netapp/app/presentation/widgets/new/yes_no_radio_buttons.dart';
 import 'package:netapp/app/presentation/widgets/title_text.dart';
 import 'package:netapp/app/providers/state_providers.dart';
 import 'package:netapp/utilities/constants.dart/app_colors.dart';
@@ -31,8 +32,8 @@ class _TradeVisitFormState extends ConsumerState<TradeVisitForm> {
 
   String sku = "";
   String? brand;
-  String? category;
-  String? channel;
+  String? category = "";
+  String? channel = "";
   double? price;
   double? newPrice;
 
@@ -46,208 +47,267 @@ class _TradeVisitFormState extends ConsumerState<TradeVisitForm> {
     super.initState();
   }
 
+  bool _isNewListing = false;
+  bool _isNoSelected1 = false;
+
+  bool _isPriceChanged = false;
+  bool _isNoSelected2 = false;
+
+  bool _isAvailable = false;
+  bool _isNoSelected3 = false;
   @override
   Widget build(BuildContext context) {
     final product = ref.read(productsProvider.notifier);
 
     return Form(
       key: _formKey,
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(children: [
-              const HorizontalDivider(width: 500),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
-                child: TextWidget(
-                  text: "Enter details on relevant brands and products",
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height * .7,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(mainAxisSize: MainAxisSize.min, children: [
+                const HorizontalDivider(width: 500),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
+                  child: TextWidget(
+                    text: "Enter details on relevant brands and products",
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              const HorizontalDivider(width: 500),
-              DropDownInput(
-                  onChanged: (val) {
-                    brand = val.name;
-                  },
-                  enableSearch: true,
-                  label: "Brand:",
-                  options: brandsDropdownList()),
-              DropDownInput(
-                  onChanged: (val) {
+                const HorizontalDivider(width: 500),
+
+                DropDownInput(
+                    onChanged: (val) {
+                      setState(() {
+                        category = val.name.toString();
+                      });
+                    },
+                    enableSearch: true,
+                    label: "Category:",
+                    options: theCategories()),
+                // DropDownInput(
+                //     onChanged: (val) {
+                //       setState(() {
+                //         sku = val.name.toString();
+                //       });
+                //     },
+                //     enableSearch: true,
+                //     label: "Brand:",
+                //     options: category == "Wines"
+                //         ? theWines()
+                //         : category == "Spirits"
+                //             ? theSpirits()
+                //             : thefoods()),
+                DropDownInput(
+                    onChanged: (val) {
+                      setState(() {
+                        brand = val.name.toString();
+                      });
+                    },
+                    enableSearch: true,
+                    label: "Brand:",
+                    options: category == "Wines"
+                        ? theWineBrandList()
+                        : category == "Spirits"
+                            ? theSpiritBrandList()
+                            : theFoodBrandList()),
+                DropDownInput(
+                    onChanged: (val) {
+                      setState(() {
+                        sku = val.name.toString();
+                      });
+                    },
+                    enableSearch: true,
+                    label: "Sku:",
+                    options: category == "Wines"
+                        ? theWines()
+                        : category == "Spirits"
+                            ? theSpirits()
+                            : thefoods()),
+
+                YesNoRadioButtons(
+                  label: "Is this brand available?",
+                  groupValueYes: _isAvailable,
+                  groupValueNo: _isNoSelected3,
+                  onChangedYes: (value) {
                     setState(() {
-                      sku = val.name.toString();
+                      _isAvailable = value ?? false;
+                      _isNoSelected3 = !_isAvailable;
                     });
                   },
-                  enableSearch: true,
-                  label: "SKU:",
-                  options: skus()),
-              const SizedBox(
-                height: 20,
-              ),
-              const Padding(
-                padding: EdgeInsets.only(right: 215.0, bottom: 4),
-                child: TextWidget(
-                  text: "Category:",
-                  fontSize: 15,
-                  color: Color.fromARGB(255, 110, 111, 117),
-                ),
-              ),
-              Container(
-                height: 40,
-                width: 278,
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.inputBorder),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20.0, top: 10),
-                  child: TextWidget(text: getCategory(sku)),
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(right: 215.0, bottom: 4, top: 15),
-                child: TextWidget(
-                  text: "Channel:",
-                  fontSize: 15,
-                  color: Color.fromARGB(255, 110, 111, 117),
-                ),
-              ),
-              Container(
-                height: 40,
-                width: 278,
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.inputBorder),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20.0, top: 10),
-                  child: TextWidget(text: getChannel(sku)),
-                ),
-              ),
-              DropDownInput(
-                  onChanged: (val) {
-                    isAvailable = val.value;
+                  onChangedNo: (value) {
+                    setState(() {
+                      _isNoSelected3 = value ?? false;
+                      _isAvailable = !_isNoSelected3;
+                    });
                   },
-                  label: "Is this brand available?",
-                  options: availability),
+                ),
 
-              DropDownInput(
-                  onChanged: (val) {
-                    isNew = val.value;
-                  },
+                YesNoRadioButtons(
                   label: "Is it a new listing?",
-                  options: yesOrNo),
-              InputFieldWidget(
-                  label: "What is it's price?",
-                  hintText: "",
-                  onChanged: (val) {},
-                  textFieldkey: formfieldkey_1),
-              DropDownInput(
-                  onChanged: (val) {
-                    hasPriceChanged = val.value;
+                  groupValueYes: _isNewListing,
+                  groupValueNo: _isNoSelected1,
+                  onChangedYes: (value) {
+                    setState(() {
+                      _isNewListing = value ?? false;
+                      _isNoSelected1 = !_isNewListing;
+                    });
                   },
-                  label: "As its price changed since its last visit",
-                  options: yesOrNo),
-              InputFieldWidget(
-                  label: "If yes, What is it's new price?",
-                  hintText: "",
-                  onChanged: (val) {},
-                  textFieldkey: formfieldkey_2),
-              const SizedBox(
-                height: 20,
-              ),
-              // const TextWidget(
+                  onChangedNo: (value) {
+                    setState(() {
+                      _isNoSelected1 = value ?? false;
+                      _isNewListing = !_isNoSelected1;
+                    });
+                  },
+                ),
 
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      bottom: 10.0,
-                    ),
-                    child: Container(
-                      width: 272,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(color: AppColors.inputBorder),
+                InputFieldWidget(
+                    label: "What is it's price?",
+                    hintText: "",
+                    onChanged: (val) {},
+                    textFieldkey: formfieldkey_1),
+
+                YesNoRadioButtons(
+                  label: "Has it's price changed?",
+                  groupValueYes: _isPriceChanged,
+                  groupValueNo: _isNoSelected2,
+                  onChangedYes: (value) {
+                    setState(() {
+                      _isPriceChanged = value ?? false;
+                      _isNoSelected2 = !_isPriceChanged;
+                    });
+                  },
+                  onChangedNo: (value) {
+                    setState(() {
+                      _isNoSelected2 = value ?? false;
+                      _isPriceChanged = !_isNoSelected2;
+                    });
+                  },
+                ),
+
+                _isPriceChanged
+                    ? InputFieldWidget(
+                        label: "What is it's new price?",
+                        hintText: "",
+                        onChanged: (val) {},
+                        textFieldkey: formfieldkey_2)
+                    : const Text(""),
+                const SizedBox(
+                  height: 20,
+                ),
+                // const TextWidget(
+
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        bottom: 10.0,
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton(
-                          style: const ButtonStyle(
-                            backgroundColor: MaterialStatePropertyAll(
-                              Color.fromARGB(255, 0, 44, 139),
+                      child: Container(
+                        width: 272,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(color: AppColors.inputBorder),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ElevatedButton(
+                            style: const ButtonStyle(
+                              backgroundColor: MaterialStatePropertyAll(
+                                Color.fromARGB(255, 0, 44, 139),
+                              ),
                             ),
-                          ),
-                          onPressed: () {
-                            Navigator.popAndPushNamed(
-                                context, Routes.productsTable,
-                                arguments: widget.id);
+                            onPressed: () {
+                              Navigator.popAndPushNamed(
+                                  context, Routes.productsTable,
+                                  arguments: widget.id);
 
-                            product.createProduct(
-                                outletId: widget.id,
-                                price: double.parse(
-                                    formfieldkey_1.currentState?.value),
-                                newPrice: double.parse(
-                                    formfieldkey_2.currentState?.value),
-                                brand: brand!,
-                                isNewListing: isNew!,
-                                hasPriceChanged: hasPriceChanged!,
-                                sku: sku,
-                                category: getCategory(sku),
-                                channel: getChannel(sku),
-                                availability: isAvailable);
-                          },
-                          child: const TextWidget(
-                            text: "Next",
-                            color: AppColors.white,
-                            fontWeight: FontWeight.bold,
+                              product.createProduct(
+                                  outletId: widget.id,
+                                  price: double.parse(
+                                      formfieldkey_1.currentState?.value),
+                                  newPrice: double.parse(
+                                      formfieldkey_2.currentState?.value),
+                                  brand: brand,
+                                  isNewListing: _isNewListing,
+                                  hasPriceChanged: _isPriceChanged,
+                                  sku: sku,
+                                  category: getCategory(sku),
+                                  channel: getChannel(sku),
+                                  availability: _isAvailable
+                                      ? "In Stock"
+                                      : "Out of Stock");
+
+                              // logger.e({
+                              //   "outletId": widget.id,
+                              //   "price": double.parse(
+                              //       formfieldkey_1.currentState?.value),
+                              //   "newPrice": double.parse(
+                              //       formfieldkey_2.currentState?.value),
+                              //   "brand": brand,
+                              //   "isNewListing": _isNewListing,
+                              //   "hasPriceChanged": _isPriceChanged,
+                              //   "sku": sku,
+                              //   "category": getCategory(sku),
+                              //   "channel": getChannel(sku),
+                              //   "availability":
+                              //       _isAvailable ? "In Stock" : "Out of Stock"
+                              // });
+                            },
+                            child: const TextWidget(
+                              text: "Next",
+                              color: AppColors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      bottom: 10.0,
-                    ),
-                    child: Container(
-                      width: 272,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(color: AppColors.inputBorder),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        bottom: 10.0,
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton(
-                          style: const ButtonStyle(
-                            backgroundColor: MaterialStatePropertyAll(
-                              Color.fromARGB(255, 0, 44, 139),
+                      child: Container(
+                        width: 272,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(color: AppColors.inputBorder),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ElevatedButton(
+                            style: const ButtonStyle(
+                              backgroundColor: MaterialStatePropertyAll(
+                                Color.fromARGB(255, 0, 44, 139),
+                              ),
                             ),
-                          ),
-                          onPressed: () {
-                            Navigator.pushNamed(
-                              context,
-                              Routes.reviewForm,
-                            );
-                          },
-                          child: const TextWidget(
-                            text: "Competition review",
-                            color: AppColors.white,
-                            fontWeight: FontWeight.bold,
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                context,
+                                Routes.reviewForm,
+                              );
+                            },
+                            child: const TextWidget(
+                              text: "Competition review",
+                              color: AppColors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  )
-                ],
-              ),
-            ]),
-          ),
-        ],
+                    )
+                  ],
+                ),
+              ]),
+            ),
+          ],
+        ),
       ),
     );
   }
