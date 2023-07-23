@@ -10,7 +10,7 @@ import 'package:netapp/app/presentation/screens/new/outlet_details_screen.dart';
 import 'package:netapp/app/presentation/screens/new/outlet_table.dart';
 import 'package:netapp/app/presentation/screens/new/product_table.dart';
 import 'package:netapp/app/presentation/screens/new/today_details.dart';
-import 'package:netapp/utilities/router/routes.dart';
+import 'package:netapp/router/routes.dart';
 
 class AppRouter {
   Route onGenerateRoute(RouteSettings routeSettings) {

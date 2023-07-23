@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:netapp/app/presentation/widgets/new/input_field_widget.dart';
 import 'package:netapp/app/presentation/widgets/title_text.dart';
 import 'package:netapp/utilities/constants.dart/app_colors.dart';
-import 'package:netapp/utilities/router/routes.dart';
+import 'package:netapp/router/routes.dart';
 import 'package:netapp/utilities/validators.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -88,7 +88,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                         style: ButtonStyle(
                             backgroundColor: MaterialStateColor.resolveWith(
-                                (states) => const Color(0xff004F9F))),
+                          (states) => const Color.fromARGB(255, 0, 44, 139),
+                        )),
                         child: const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 110.0),
                           child: TextWidget(

@@ -59,11 +59,8 @@ class ProductNotifier extends StateNotifier<List<Product>> {
     productBox.add(_product?.toMap());
 
     List<Product> theProducts = await getProducts();
-    print({"theProducts": theProducts});
 
     state = theProducts;
     _products = state;
-
-    print({"state": state});
   }
 }

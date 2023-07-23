@@ -652,7 +652,6 @@ List<String> southSouth = [
 ];
 
 String getRegion(String? state) {
-  print(state);
   if (northEast.contains(state)) {
     return "North East";
   } else if (northWest.contains(state)) {

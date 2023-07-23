@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
-import 'package:netapp/utilities/router/app_router.dart';
+import 'package:netapp/router/app_router.dart';
 import 'package:path_provider/path_provider.dart';
 
 void main() async {

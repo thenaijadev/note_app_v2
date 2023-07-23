@@ -4,7 +4,7 @@ import 'package:netapp/app/presentation/screens/new/today_details.dart';
 import 'package:netapp/app/presentation/widgets/new/header_underline.dart';
 import 'package:netapp/app/presentation/widgets/title_text.dart';
 import 'package:netapp/utilities/constants.dart/app_colors.dart';
-import 'package:netapp/utilities/router/routes.dart';
+import 'package:netapp/router/routes.dart';
 
 class MobileDataTable extends StatefulWidget {
   const MobileDataTable(

@@ -9,7 +9,7 @@ import 'package:netapp/app/presentation/widgets/title_text.dart';
 import 'package:netapp/app/providers/state_providers.dart';
 import 'package:netapp/utilities/constants.dart/app_colors.dart';
 import 'package:netapp/utilities/lists.dart';
-import 'package:netapp/utilities/router/routes.dart';
+import 'package:netapp/router/routes.dart';
 
 class TradeVisitForm extends ConsumerStatefulWidget {
   const TradeVisitForm({

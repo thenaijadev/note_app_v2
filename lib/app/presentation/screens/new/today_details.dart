@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:netapp/app/presentation/widgets/title_text.dart';
 import 'package:netapp/utilities/constants.dart/app_colors.dart';
-import 'package:netapp/utilities/router/routes.dart';
+import 'package:netapp/router/routes.dart';
 
 class TodayDetails extends StatefulWidget {
   const TodayDetails({super.key});

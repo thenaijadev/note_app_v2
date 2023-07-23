@@ -8,7 +8,7 @@ import 'package:netapp/app/providers/state_providers.dart';
 import 'package:netapp/utilities/constants.dart/app_colors.dart';
 import 'package:netapp/utilities/lists.dart';
 import 'package:netapp/utilities/logger.dart';
-import 'package:netapp/utilities/router/routes.dart';
+import 'package:netapp/router/routes.dart';
 
 class OutletDetailsForm extends ConsumerStatefulWidget {
   const OutletDetailsForm(

@@ -8,7 +8,7 @@ import 'package:netapp/app/presentation/widgets/new/label_card_product.dart';
 import 'package:netapp/app/presentation/widgets/title_text.dart';
 import 'package:netapp/app/providers/state_providers.dart';
 import 'package:netapp/utilities/constants.dart/app_colors.dart';
-import 'package:netapp/utilities/router/routes.dart';
+import 'package:netapp/router/routes.dart';
 
 class ProductsTable extends ConsumerStatefulWidget {
   const ProductsTable({super.key, required this.id});
