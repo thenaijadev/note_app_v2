@@ -4,6 +4,7 @@ import 'package:netapp/app/data/models/product.dart';
 import 'package:netapp/app/presentation/screens/error.dart';
 import 'package:netapp/app/presentation/screens/home.dart';
 import 'package:netapp/app/presentation/screens/new/add_sku_screen.dart';
+import 'package:netapp/app/presentation/screens/new/calendar_screen.dart';
 import 'package:netapp/app/presentation/screens/new/competition_review_form_screen.dart';
 import 'package:netapp/app/presentation/screens/new/competition_review_table.dart';
 import 'package:netapp/app/presentation/screens/new/data_capture_form.dart';
@@ -93,6 +94,10 @@ class AppRouter {
 
         return MaterialPageRoute(
           builder: (_) => ProductDetails(product: data),
+        );
+      case Routes.calendar:
+        return MaterialPageRoute(
+          builder: (_) => const Calendar(),
         );
       default:
         return MaterialPageRoute(

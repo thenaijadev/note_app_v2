@@ -7,6 +7,7 @@ import 'package:netapp/app/presentation/widgets/new/label_card_outlets.dart';
 import 'package:netapp/app/presentation/widgets/new/mobile_data_table.dart';
 import 'package:netapp/app/presentation/widgets/title_text.dart';
 import 'package:netapp/app/providers/state_providers.dart';
+import 'package:netapp/router/routes.dart';
 import 'package:netapp/utilities/constants.dart/app_colors.dart';
 
 class OutletTable extends ConsumerStatefulWidget {
@@ -156,6 +157,9 @@ class _OutletDataState extends ConsumerState<OutletTable> {
                   color: Colors.white,
                   child: Column(
                     children: [
+                      const SizedBox(
+                        height: 20,
+                      ),
                       Expanded(
                           child: CupertinoDatePicker(
                         mode: CupertinoDatePickerMode.date,
@@ -169,6 +173,37 @@ class _OutletDataState extends ConsumerState<OutletTable> {
                       Center(
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 10.0, top: 30),
+                          child: Container(
+                            width: 272,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              border: Border.all(color: AppColors.inputBorder),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ElevatedButton(
+                                style: const ButtonStyle(
+                                  backgroundColor: MaterialStatePropertyAll(
+                                    Color.fromARGB(255, 0, 44, 139),
+                                  ),
+                                ),
+                                onPressed: () async {
+                                  Navigator.pushNamed(context, Routes.calendar);
+                                },
+                                child: const TextWidget(
+                                  text: "Check Calender",
+                                  color: AppColors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 10.0, top: 0),
                           child: Container(
                             width: 272,
                             height: 50,
