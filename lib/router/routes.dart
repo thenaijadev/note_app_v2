@@ -12,4 +12,5 @@ class Routes {
   static const String outletDetails = "/outletDetails";
 
   static const String skuForm = "/skuForm";
+  static const String productDetails = "/productDetails";
 }

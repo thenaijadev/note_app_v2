@@ -117,9 +117,15 @@ class _ProductsTableState extends ConsumerState<ProductsTable> {
                   child: ListView.builder(
                       itemCount: products.length,
                       itemBuilder: (BuildContext context, index) {
-                        return MobileDataTableProducts(
-                          productList: products,
-                          index: index,
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, Routes.productDetails,
+                                arguments: products[index]);
+                          },
+                          child: MobileDataTableProducts(
+                            productList: products,
+                            index: index,
+                          ),
                         );
                       }))
         ]),

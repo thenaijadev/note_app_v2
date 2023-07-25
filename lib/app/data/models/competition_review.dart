@@ -7,22 +7,24 @@ class CompetitionReview {
   String? image;
   String? additionalInformtion;
   String? date;
-  CompetitionReview({
-    this.acticatedBrand,
-    this.whatActication,
-    this.image,
-    this.additionalInformtion,
-    this.date,
-  });
+  String? outletId;
+  CompetitionReview(
+      {this.acticatedBrand,
+      this.whatActication,
+      this.image,
+      this.additionalInformtion,
+      this.date,
+      this.outletId});
 
-  CompetitionReview copyWith({
-    String? acticatedBrand,
-    String? whatActication,
-    String? image,
-    String? additionalInformtion,
-    String? date,
-  }) {
+  CompetitionReview copyWith(
+      {String? acticatedBrand,
+      String? whatActication,
+      String? image,
+      String? additionalInformtion,
+      String? date,
+      String? outletId}) {
     return CompetitionReview(
+      outletId: outletId ?? this.outletId,
       acticatedBrand: acticatedBrand ?? this.acticatedBrand,
       whatActication: whatActication ?? this.whatActication,
       image: image ?? this.image,
@@ -34,6 +36,7 @@ class CompetitionReview {
   Map<dynamic, dynamic> toMap() {
     return <dynamic, dynamic>{
       'acticatedBrand': acticatedBrand,
+      "outletId": outletId,
       'whatActication': whatActication,
       'image': image,
       'additionalInformtion': additionalInformtion,
@@ -46,6 +49,7 @@ class CompetitionReview {
       acticatedBrand: map['acticatedBrand'] != null
           ? map['acticatedBrand'] as String
           : null,
+      outletId: map['outlet`id'] != null ? map['outletId'] as String : null,
       whatActication: map['whatActication'] != null
           ? map['whatActication'] as String
           : null,
@@ -64,7 +68,7 @@ class CompetitionReview {
 
   @override
   String toString() {
-    return 'CompetitionReview(acticatedBrand: $acticatedBrand, whatActication: $whatActication, image: $image, additionalInformtion: $additionalInformtion, date: $date)';
+    return 'CompetitionReview(acticatedBrand: $acticatedBrand, whatActication: $whatActication, image: $image, additionalInformtion: $additionalInformtion, date: $date, outletId: $outletId)';
   }
 
   @override
@@ -72,6 +76,7 @@ class CompetitionReview {
     if (identical(this, other)) return true;
 
     return other.acticatedBrand == acticatedBrand &&
+        other.outletId == outletId &&
         other.whatActication == whatActication &&
         other.image == image &&
         other.additionalInformtion == additionalInformtion &&

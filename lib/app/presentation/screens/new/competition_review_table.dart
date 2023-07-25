@@ -28,13 +28,23 @@ class _OutletDataState extends ConsumerState<CompetitionReviewTable> {
     super.initState();
   }
 
+  bool _isFunctionExecuted = false;
+
+  void runFunctionOnce(reviews) {
+    if (!_isFunctionExecuted) {
+      Future.delayed(const Duration(milliseconds: 100), () {
+        reviews.getReviews();
+        setState(() {});
+      });
+      _isFunctionExecuted = true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final reviews = ref.watch(reviewProvider.notifier);
-    Future.delayed(const Duration(seconds: 1), () {
-      reviews.getReviews();
-      // setState(() {});
-    });
+
+    runFunctionOnce(reviews);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -63,7 +73,10 @@ class _OutletDataState extends ConsumerState<CompetitionReviewTable> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color.fromARGB(255, 0, 44, 139),
         onPressed: () {
-          Navigator.pushReplacementNamed(context, Routes.reviewForm);
+          Navigator.pushReplacementNamed(
+            context,
+            Routes.reviewForm,
+          );
         },
         child: const Icon(
           Icons.add,

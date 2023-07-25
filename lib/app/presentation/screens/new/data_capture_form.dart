@@ -93,7 +93,7 @@ class _DataCatureScreenState extends ConsumerState<DataCatureScreen>
                           const HorizontalDivider(width: 500),
                           const DataRowWidget(
                             label: "Outlet captured by",
-                            value: "12",
+                            value: "Ojo Williams",
                           ),
                           const HorizontalDivider(width: 500),
                           DataRowWidget(

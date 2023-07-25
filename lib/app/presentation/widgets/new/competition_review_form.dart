@@ -10,7 +10,8 @@ import 'package:netapp/utilities/image_helper.dart';
 import 'package:netapp/router/routes.dart';
 
 class CompetitionReviewForm extends ConsumerStatefulWidget {
-  const CompetitionReviewForm({super.key});
+  const CompetitionReviewForm({super.key, required this.outletId});
+  final String outletId;
 
   @override
   ConsumerState<CompetitionReviewForm> createState() =>
@@ -35,11 +36,12 @@ class _CompetitionReviewFormState extends ConsumerState<CompetitionReviewForm> {
       return;
     }
     review.createReview(
+        outletId: widget.outletId,
         date: DateFormat.yMMMMd().format(DateTime.now()),
         activatedBrand: formfieldkey_1.currentState?.value,
         additionalInformation: formfieldkey_3.currentState?.value,
         image: imageAsString,
-        brandActivation: formfieldkey_3.currentState?.value);
+        brandActivation: formfieldkey_2.currentState?.value);
     Navigator.pushNamed(context, Routes.reviews);
   }
 

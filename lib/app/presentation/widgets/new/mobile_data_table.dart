@@ -83,10 +83,9 @@ class _MobileDataTableState extends State<MobileDataTable> {
                             ),
                           ),
                           onPressed: () async {
-                            Navigator.pushNamed(
-                              context,
-                              Routes.reviewForm,
-                            );
+                            Navigator.pushNamed(context, Routes.reviewForm,
+                                arguments:
+                                    widget.outletList?[widget.index]?.id);
                             // Navigator.pushNamed(context, Routes.outlets);
                           },
                           child: const TextWidget(
@@ -157,7 +156,7 @@ class _MobileDataTableState extends State<MobileDataTable> {
               ),
             ),
             DataRowWidget(
-                label: "Date Entered:",
+                label: "Date Registered:",
                 value: widget.outletList?[widget.index]?.date),
             const HeaderUnderline(height: 1, color: AppColors.hintColor),
             DataRowWidget(

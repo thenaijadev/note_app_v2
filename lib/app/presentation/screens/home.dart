@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     children: [
                       const TextWidget(
-                        text: "Login to GDN Portal!",
+                        text: "Login to Netapp",
                         color: AppColors.titleBlack,
                         fontSize: 30,
                       ),

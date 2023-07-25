@@ -28,11 +28,13 @@ class ReviewNotifier extends StateNotifier<List<CompetitionReview>> {
 
   void createReview(
       {required brandActivation,
+      required outletId,
       required activatedBrand,
       required additionalInformation,
       required date,
       required image}) async {
     _review = CompetitionReview(
+        outletId: outletId,
         date: date,
         acticatedBrand: activatedBrand,
         whatActication: brandActivation,

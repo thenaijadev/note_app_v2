@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:netapp/app/data/models/outlet.dart';
+import 'package:netapp/app/data/models/product.dart';
 import 'package:netapp/app/presentation/screens/error.dart';
 import 'package:netapp/app/presentation/screens/home.dart';
 import 'package:netapp/app/presentation/screens/new/add_sku_screen.dart';
@@ -8,6 +9,7 @@ import 'package:netapp/app/presentation/screens/new/competition_review_table.dar
 import 'package:netapp/app/presentation/screens/new/data_capture_form.dart';
 import 'package:netapp/app/presentation/screens/new/outlet_details_screen.dart';
 import 'package:netapp/app/presentation/screens/new/outlet_table.dart';
+import 'package:netapp/app/presentation/screens/new/product_details.dart';
 import 'package:netapp/app/presentation/screens/new/product_table.dart';
 import 'package:netapp/app/presentation/screens/new/today_details.dart';
 import 'package:netapp/router/routes.dart';
@@ -65,8 +67,10 @@ class AppRouter {
         );
 
       case Routes.reviewForm:
+        var outletId = routeSettings.arguments as String;
+
         return MaterialPageRoute(
-          builder: (_) => const CompetitionReviewFormScreen(),
+          builder: (_) => CompetitionReviewFormScreen(outletId: outletId),
         );
       case Routes.outletDetails:
         var outlet = routeSettings.arguments as Outlet;
@@ -83,6 +87,12 @@ class AppRouter {
           builder: (_) => ProductsTable(
             id: data,
           ),
+        );
+      case Routes.productDetails:
+        var data = routeSettings.arguments as Product;
+
+        return MaterialPageRoute(
+          builder: (_) => ProductDetails(product: data),
         );
       default:
         return MaterialPageRoute(

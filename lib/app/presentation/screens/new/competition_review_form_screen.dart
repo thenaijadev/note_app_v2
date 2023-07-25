@@ -10,8 +10,8 @@ import 'package:netapp/utilities/geolocator.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 
 class CompetitionReviewFormScreen extends StatefulWidget {
-  const CompetitionReviewFormScreen({super.key});
-
+  const CompetitionReviewFormScreen({super.key, required this.outletId});
+  final String outletId;
   @override
   State<CompetitionReviewFormScreen> createState() =>
       _CompetitionReviewFormScreenState();
@@ -26,6 +26,7 @@ class _CompetitionReviewFormScreenState
   @override
   void initState() {
     _stopWatchTimer.onStartTimer();
+
     controller = TabController(length: 1, vsync: this);
     getLocation();
     super.initState();
@@ -137,7 +138,9 @@ class _CompetitionReviewFormScreenState
                             child: TabBarView(
                               physics: const NeverScrollableScrollPhysics(),
                               controller: controller,
-                              children: const [CompetitionReviewForm()],
+                              children: [
+                                CompetitionReviewForm(outletId: widget.outletId)
+                              ],
                             ),
                           ),
                         ],
