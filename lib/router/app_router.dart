@@ -97,7 +97,7 @@ class AppRouter {
         );
       case Routes.calendar:
         return MaterialPageRoute(
-          builder: (_) => const Calendar(),
+          builder: (_) => const CalenderScreen(),
         );
       default:
         return MaterialPageRoute(

@@ -2,17 +2,19 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:netapp/utilities/logger.dart';
 import 'package:netapp/utilities/utils.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class Calendar extends StatefulWidget {
-  const Calendar({super.key});
+class CalenderScreen extends ConsumerStatefulWidget {
+  const CalenderScreen({super.key});
 
   @override
-  _CalendarState createState() => _CalendarState();
+  ConsumerState<CalenderScreen> createState() => _CalenderScreenState();
 }
 
-class _CalendarState extends State<Calendar> {
+class _CalenderScreenState extends ConsumerState<CalenderScreen> {
   late final ValueNotifier<List<Event>> _selectedEvents;
   CalendarFormat _calendarFormat = CalendarFormat.month;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
@@ -61,7 +63,7 @@ class _CalendarState extends State<Calendar> {
       });
 
       _selectedEvents.value = _getEventsForDay(selectedDay);
-      print(selectedDay);
+      logger.e(selectedDay);
     }
   }
 
